@@ -20,6 +20,7 @@
     }
 
     *{ box-sizing: border-box; }
+    html, body { width: 100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
@@ -29,6 +30,7 @@
         radial-gradient(700px 400px at 80% 10%, rgba(34,197,94,0.25), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       min-height: 100vh;
+      overflow-x: hidden; /* last-resort guard */
     }
 
     .wrap{
@@ -43,23 +45,28 @@
       justify-content:space-between;
       gap:12px;
       margin-bottom: 14px;
+      flex-wrap: wrap; /* prevents overflow on small widths */
     }
 
     .brand{
       display:flex;
       flex-direction:column;
       gap:2px;
+      min-width: 240px;
+      flex: 1 1 240px;
     }
     .brand h1{
       font-size: 20px;
       margin:0;
       letter-spacing: 0.2px;
+      overflow-wrap: anywhere;
     }
     .brand p{
       margin:0;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     .tabs{
@@ -71,6 +78,7 @@
       border-radius: 999px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+      flex: 0 0 auto;
     }
     .tabbtn{
       border: 1px solid transparent;
@@ -82,6 +90,7 @@
       font-weight: 700;
       letter-spacing: 0.2px;
       transition: all .15s ease;
+      white-space: nowrap;
     }
     .tabbtn:hover{ color: var(--text); background: rgba(255,255,255,0.06); }
     .tabbtn.active{
@@ -99,7 +108,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
       gap: 14px;
     }
 
@@ -110,15 +119,17 @@
       box-shadow: var(--shadow2);
       padding: 16px;
       backdrop-filter: blur(10px);
+      min-width: 0; /* important for grid overflow */
     }
 
     .card h2{
       margin: 0 0 8px;
       font-size: 16px;
       letter-spacing: 0.2px;
+      overflow-wrap: anywhere;
     }
-    .muted{ color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .muted2{ color: var(--muted2); font-size: 12px; line-height: 1.5; }
+    .muted{ color: var(--muted); font-size: 13px; line-height: 1.5; overflow-wrap:anywhere; }
+    .muted2{ color: var(--muted2); font-size: 12px; line-height: 1.5; overflow-wrap:anywhere; }
 
     .field{ margin: 12px 0; }
     .labelrow{
@@ -127,11 +138,13 @@
       align-items:baseline;
       gap:10px;
       margin-bottom: 6px;
+      min-width: 0;
     }
     label{
       font-weight: 800;
       font-size: 13px;
       letter-spacing: 0.2px;
+      overflow-wrap: anywhere;
     }
     input{
       width:100%;
@@ -142,6 +155,7 @@
       border: 1px solid rgba(255,255,255,0.14);
       border-radius: 14px;
       transition: border .15s ease, box-shadow .15s ease;
+      min-width: 0;
     }
     input:hover{ border-color: rgba(255,255,255,0.22); }
     input:focus{
@@ -152,20 +166,26 @@
 
     .pillrow{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr)); /* prevents pill overflow */
       gap: 10px;
       margin-top: 10px;
     }
+    @media (max-width: 520px){
+      .pillrow{ grid-template-columns: 1fr; } /* stack on small screens */
+      .tabs{ width: 100%; justify-content: center; }
+      .tabbtn{ flex: 1 1 0; text-align:center; }
+    }
+
     .pill{
       border-radius: 16px;
       padding: 12px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       position: relative;
-      overflow: visible;
+      min-width: 0;
     }
 
-    /* Tooltip (hover or keyboard focus) */
+    /* Tooltip */
     .tip{
       display:inline-flex;
       align-items:center;
@@ -177,15 +197,18 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
+      max-width: 100%;
     }
     .tip:focus-visible{ outline:none; box-shadow: var(--ring); }
+
     .tip::after{
       content: attr(data-tip);
       position: absolute;
       left: 0;
       top: calc(100% + 10px);
-      min-width: 240px;
-      max-width: 360px;
+
+      width: max-content;
+      max-width: min(80vw, 360px); /* key mobile fix */
       padding: 10px 12px;
       border-radius: 12px;
       background: rgba(12, 16, 30, 0.98);
@@ -194,7 +217,9 @@
       box-shadow: var(--shadow2);
       font-size: 12px;
       line-height: 1.35;
+
       white-space: normal;
+      overflow-wrap: anywhere; /* key: wrap long formulas */
       opacity: 0;
       transform: translateY(-4px);
       pointer-events: none;
@@ -213,12 +238,14 @@
       font-weight: 900;
       letter-spacing: 0.2px;
       margin-bottom: 10px;
+      min-width: 0;
     }
     .pill .v{
       font-size: 22px;
       font-weight: 900;
       letter-spacing: 0.2px;
       line-height: 1.1;
+      overflow-wrap: anywhere; /* protect big numbers */
     }
     .pill .m{
       margin-top: 6px;
@@ -226,19 +253,21 @@
       font-weight: 900;
       color: var(--muted);
       letter-spacing: 0.2px;
+      overflow-wrap: anywhere;
     }
 
     .pill.eq1 .v{ color: #a78bfa; }
     .pill.eq2 .v{ color: #86efac; }
     .pill.eq3 .v{ color: #93c5fd; }
 
-    /* tiers */
     .tiers-title{
       display:flex;
       justify-content:space-between;
       align-items:baseline;
       gap:10px;
       margin: 0 0 10px;
+      flex-wrap: wrap;
+      min-width: 0;
     }
     .tiers-title h2{ margin:0; }
     .tiers{
@@ -256,11 +285,14 @@
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.06);
+      flex-wrap: wrap; /* prevent overflow */
+      min-width: 0;
     }
     .tier .name{
       font-weight: 900;
       letter-spacing: 0.2px;
       color: rgba(255,255,255,0.92);
+      overflow-wrap:anywhere;
     }
     .tier .range{
       color: var(--muted);
@@ -418,7 +450,6 @@
       const Hero      = n(el('d14').value);
       const Mod       = n(el('d15').value);
 
-      // Confirmed equations:
       const EQ1 = ((3 * Mod) + Structure + Tech + Hero) / 6;
       const EQ2 = ((3 * Mod) + Structure + Tech + Hero) / 4;
       const EQ3 = (Structure + Tech + Hero + Mod) * 0.265;
@@ -467,7 +498,6 @@
       el('k-eq2').textContent = isJa ? 'EQ2・計算式2' : 'EQ2';
       el('k-eq3').textContent = isJa ? 'EQ3・計算式3' : 'EQ3';
 
-      // Hover tooltips (formulas)
       el('tip-eq1').setAttribute('data-tip', isJa
         ? '計算式1: ((3×改造車戦力) + 建物戦力 + 研究戦力 + Hero戦力) / 6'
         : 'EQ1: ((3×Mod Vehicle) + Structure + Tech + Hero) / 6'
@@ -502,8 +532,6 @@
 
     el('tab-en').addEventListener('click', () => setLang('en'));
     el('tab-ja').addEventListener('click', () => setLang('ja'));
-
-    // Set default tooltips on first load:
     setLang('en');
   </script>
 </body>
