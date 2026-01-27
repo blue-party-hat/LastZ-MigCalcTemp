@@ -161,28 +161,76 @@
       padding: 12px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
+      position: relative;
+      overflow: visible;
     }
+
+    /* Tooltip (hover or keyboard focus) */
+    .tip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor: help;
+      user-select: none;
+      position: relative;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .tip:focus-visible{ outline:none; box-shadow: var(--ring); }
+    .tip::after{
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      top: calc(100% + 10px);
+      min-width: 240px;
+      max-width: 360px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(12, 16, 30, 0.98);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow2);
+      font-size: 12px;
+      line-height: 1.35;
+      white-space: normal;
+      opacity: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+      transition: opacity .12s ease, transform .12s ease;
+      z-index: 10;
+    }
+    .tip:hover::after,
+    .tip:focus::after{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .pill .k{
       color: var(--muted);
       font-size: 12px;
       font-weight: 900;
       letter-spacing: 0.2px;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
     .pill .v{
       font-size: 22px;
       font-weight: 900;
       letter-spacing: 0.2px;
+      line-height: 1.1;
     }
+    .pill .m{
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+
     .pill.eq1 .v{ color: #a78bfa; }
     .pill.eq2 .v{ color: #86efac; }
     .pill.eq3 .v{ color: #93c5fd; }
-
-    .footer{
-      margin-top: 14px;
-      color: var(--muted2);
-      font-size: 12px;
-    }
 
     /* tiers */
     .tiers-title{
@@ -284,10 +332,6 @@
           </div>
           <input id="d15" type="number" step="any" value="0" inputmode="decimal">
         </div>
-
-        <div class="footer" id="eq-footer">
-          EQ1 = ((3×Mod)+Structure+Tech+Hero)/6 · EQ2 = /4 · EQ3 = (Structure+Tech+Hero+Mod)×0.265
-        </div>
       </div>
 
       <div class="card">
@@ -296,24 +340,38 @@
 
         <div class="pillrow">
           <div class="pill eq1">
-            <div class="k" id="k-eq1">EQ1</div>
+            <div class="k">
+              <span class="tip" id="tip-eq1" tabindex="0" data-tip="EQ1 formula">
+                <span id="k-eq1">EQ1</span>
+              </span>
+            </div>
             <div class="v" id="eq1">0</div>
+            <div class="m" id="eq1m">0M</div>
           </div>
 
           <div class="pill eq2">
-            <div class="k" id="k-eq2">EQ2</div>
+            <div class="k">
+              <span class="tip" id="tip-eq2" tabindex="0" data-tip="EQ2 formula">
+                <span id="k-eq2">EQ2</span>
+              </span>
+            </div>
             <div class="v" id="eq2">0</div>
+            <div class="m" id="eq2m">0M</div>
           </div>
 
           <div class="pill eq3">
-            <div class="k" id="k-eq3">EQ3</div>
+            <div class="k">
+              <span class="tip" id="tip-eq3" tabindex="0" data-tip="EQ3 formula">
+                <span id="k-eq3">EQ3</span>
+              </span>
+            </div>
             <div class="v" id="eq3">0</div>
+            <div class="m" id="eq3m">0M</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Migration tiers (bottom) -->
     <div class="card" style="margin-top:14px;">
       <div class="tiers-title">
         <h2 id="tiers-title">Migration tiers</h2>
@@ -345,6 +403,15 @@
     const el = (id) => document.getElementById(id);
     const n = (v) => Number(v || 0);
 
+    function toWhole(num){
+      return Math.round(Number(num) || 0);
+    }
+
+    function toM(num){
+      const x = Math.round((Number(num) || 0) / 1_000_000);
+      return `${x}M`;
+    }
+
     function recalc(){
       const Structure = n(el('d12').value);
       const Tech      = n(el('d13').value);
@@ -356,10 +423,17 @@
       const EQ2 = ((3 * Mod) + Structure + Tech + Hero) / 4;
       const EQ3 = (Structure + Tech + Hero + Mod) * 0.265;
 
-      // Whole numbers (no decimals):
-      el('eq1').textContent = Math.round(EQ1).toString();
-      el('eq2').textContent = Math.round(EQ2).toString();
-      el('eq3').textContent = Math.round(EQ3).toString();
+      const e1 = toWhole(EQ1);
+      const e2 = toWhole(EQ2);
+      const e3 = toWhole(EQ3);
+
+      el('eq1').textContent = e1.toString();
+      el('eq2').textContent = e2.toString();
+      el('eq3').textContent = e3.toString();
+
+      el('eq1m').textContent = toM(e1);
+      el('eq2m').textContent = toM(e2);
+      el('eq3m').textContent = toM(e3);
     }
 
     ['d12','d13','d14','d15'].forEach(id => el(id).addEventListener('input', recalc));
@@ -393,14 +467,23 @@
       el('k-eq2').textContent = isJa ? 'EQ2・計算式2' : 'EQ2';
       el('k-eq3').textContent = isJa ? 'EQ3・計算式3' : 'EQ3';
 
-      el('eq-footer').textContent = isJa
-        ? 'EQ1・計算式1 / EQ2・計算式2 / EQ3・計算式3'
-        : 'EQ1 = ((3×Mod)+Structure+Tech+Hero)/6 · EQ2 = /4 · EQ3 = (Structure+Tech+Hero+Mod)×0.265';
+      // Hover tooltips (formulas)
+      el('tip-eq1').setAttribute('data-tip', isJa
+        ? '計算式1: ((3×改造車戦力) + 建物戦力 + 研究戦力 + Hero戦力) / 6'
+        : 'EQ1: ((3×Mod Vehicle) + Structure + Tech + Hero) / 6'
+      );
+      el('tip-eq2').setAttribute('data-tip', isJa
+        ? '計算式2: ((3×改造車戦力) + 建物戦力 + 研究戦力 + Hero戦力) / 4'
+        : 'EQ2: ((3×Mod Vehicle) + Structure + Tech + Hero) / 4'
+      );
+      el('tip-eq3').setAttribute('data-tip', isJa
+        ? '計算式3: (建物戦力 + 研究戦力 + Hero戦力 + 改造車戦力) × 0.265'
+        : 'EQ3: (Structure + Tech + Hero + Mod Vehicle) × 0.265'
+      );
 
       el('tiers-title').textContent = isJa ? '移行枠' : 'Migration tiers';
       el('tiers-sub').textContent   = isJa ? 'スコア範囲の目安です。' : 'Based on your score range.';
 
-      // Update tiers list text (4 items)
       const items = el('tiers-list').querySelectorAll('li.tier');
       if(items.length === 4){
         items[0].querySelector('.name').textContent  = isJa ? 'エリート (1枠)' : 'Elite (1 spot)';
@@ -419,6 +502,9 @@
 
     el('tab-en').addEventListener('click', () => setLang('en'));
     el('tab-ja').addEventListener('click', () => setLang('ja'));
+
+    // Set default tooltips on first load:
+    setLang('en');
   </script>
 </body>
 </html>
