@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Migration Score Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin: 12px 0; }
+    label { display:block; margin: 10px 0 4px; }
+    input { width: 100%; padding: 8px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background: #f5f5f5; }
+    .muted { color:#555; font-size: 13px; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <h2>(temp) Migration Score Calculator</h2>
+  <p class="muted">
+    This is not an official calculator. Enter values below to estimate the score.
+  </p>
+
+  <div class="card">
+    <h3>Enter corresponding numbers</h3>
+
+    <label>Structure Power (D12)</label>
+    <input id="d12" type="number" step="any" value="0">
+
+    <label>Tech Power (D13)</label>
+    <input id="d13" type="number" step="any" value="0">
+
+    <label>Hero Power (D14)</label>
+    <input id="d14" type="number" step="any" value="0">
+
+    <label>Mod Vehicle Power (D15)</label>
+    <input id="d15" type="number" step="any" value="0">
+  </div>
+
+  <div class="card">
+    <h3>Score prediction</h3>
+    <table>
+      <thead>
+        <tr><th>EQ1</th><th>EQ2</th><th>EQ3</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="eq1">0</td>
+          <td id="eq2">0</td>
+          <td id="eq3">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const el = (id) => document.getElementById(id);
+
+    function n(v){ return Number(v || 0); }
+
+    // Your equations (translated from Excel):
+    // EQ1 = ((3*D15)+D12+D13+D14)/6
+    // EQ2 = ((3*D15)+D12+D13+D14)/4
+    // EQ3 = (SUM(D12:D15))*0.265   <-- Excel range meaning
+    function recalc(){
+      const D12 = n(el('d12').value);
+      const D13 = n(el('d13').value);
+      const D14 = n(el('d14').value);
+      const D15 = n(el('d15').value);
+
+      const EQ1 = ((3*D15) + D12 + D13 + D14) / 6;
+      const EQ2 = ((3*D15) + D12 + D13 + D14) / 4;
+      const EQ3 = (D12 + D13 + D14 + D15) * 0.265;
+
+      // show as integers (no decimals). Change to .toFixed(2) if you want decimals.
+      el('eq1').textContent = Math.round(EQ1).toString();
+      el('eq2').textContent = Math.round(EQ2).toString();
+      el('eq3').textContent = Math.round(EQ3).toString();
+    }
+
+    ['d12','d13','d14','d15'].forEach(id => el(id).addEventListener('input', recalc));
+    recalc();
+  </script>
+</body>
+</html>
