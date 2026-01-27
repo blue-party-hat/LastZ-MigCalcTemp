@@ -9,18 +9,12 @@
     :root{
       --bg0: #0b1020;
       --bg1: #0f1733;
-      --card: rgba(255,255,255,0.08);
-      --card2: rgba(255,255,255,0.12);
       --border: rgba(255,255,255,0.14);
       --text: rgba(255,255,255,0.92);
       --muted: rgba(255,255,255,0.70);
       --muted2: rgba(255,255,255,0.60);
-      --accent: #7c3aed;      /* purple */
-      --accent2: #22c55e;     /* green */
-      --warn: #f59e0b;
       --shadow: 0 10px 30px rgba(0,0,0,0.35);
       --shadow2: 0 18px 60px rgba(0,0,0,0.45);
-      --radius: 16px;
       --radius2: 22px;
       --ring: 0 0 0 3px rgba(124,58,237,0.35);
     }
@@ -68,7 +62,6 @@
       line-height: 1.35;
     }
 
-    /* Tabs */
     .tabs{
       display:flex;
       gap:8px;
@@ -104,7 +97,6 @@
     .panel{ display:none; margin: 10px 0 16px; }
     .panel.active{ display:block; }
 
-    /* Layout */
     .grid{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -128,7 +120,6 @@
     .muted{ color: var(--muted); font-size: 13px; line-height: 1.5; }
     .muted2{ color: var(--muted2); font-size: 12px; line-height: 1.5; }
 
-    /* Inputs */
     .field{ margin: 12px 0; }
     .labelrow{
       display:flex;
@@ -142,10 +133,6 @@
       font-size: 13px;
       letter-spacing: 0.2px;
     }
-    .hint{
-      font-size: 12px;
-      color: var(--muted2);
-    }
     input{
       width:100%;
       padding: 12px 12px;
@@ -154,7 +141,7 @@
       background: rgba(10, 14, 28, 0.55);
       border: 1px solid rgba(255,255,255,0.14);
       border-radius: 14px;
-      transition: border .15s ease, box-shadow .15s ease, transform .05s ease;
+      transition: border .15s ease, box-shadow .15s ease;
     }
     input:hover{ border-color: rgba(255,255,255,0.22); }
     input:focus{
@@ -163,7 +150,6 @@
       box-shadow: var(--ring);
     }
 
-    /* Results */
     .pillrow{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -179,7 +165,7 @@
     .pill .k{
       color: var(--muted);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.2px;
       margin-bottom: 6px;
     }
@@ -192,25 +178,47 @@
     .pill.eq2 .v{ color: #86efac; }
     .pill.eq3 .v{ color: #93c5fd; }
 
-    .note{
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(245,158,11,0.35);
-      background: rgba(245,158,11,0.10);
-      color: rgba(255,255,255,0.88);
-      font-size: 12.5px;
-      line-height: 1.5;
-    }
-
     .footer{
       margin-top: 14px;
       color: var(--muted2);
       font-size: 12px;
     }
 
-    a{ color: #c4b5fd; text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    /* tiers */
+    .tiers-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:10px;
+      margin: 0 0 10px;
+    }
+    .tiers-title h2{ margin:0; }
+    .tiers{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display:grid;
+      gap: 10px;
+    }
+    .tier{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+    .tier .name{
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: rgba(255,255,255,0.92);
+    }
+    .tier .range{
+      color: var(--muted);
+      font-weight: 800;
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -248,7 +256,7 @@
         <div class="field">
           <div class="labelrow">
             <label id="lbl-d12">Structure Power</label>
-            <div class="hint">D12</div>
+            <div class="muted2" aria-hidden="true"></div>
           </div>
           <input id="d12" type="number" step="any" value="0" inputmode="decimal">
         </div>
@@ -256,7 +264,7 @@
         <div class="field">
           <div class="labelrow">
             <label id="lbl-d13">Tech Power</label>
-            <div class="hint">D13</div>
+            <div class="muted2" aria-hidden="true"></div>
           </div>
           <input id="d13" type="number" step="any" value="0" inputmode="decimal">
         </div>
@@ -264,7 +272,7 @@
         <div class="field">
           <div class="labelrow">
             <label id="lbl-d14">Hero Power</label>
-            <div class="hint">D14</div>
+            <div class="muted2" aria-hidden="true"></div>
           </div>
           <input id="d14" type="number" step="any" value="0" inputmode="decimal">
         </div>
@@ -272,7 +280,7 @@
         <div class="field">
           <div class="labelrow">
             <label id="lbl-d15">Mod Vehicle Power</label>
-            <div class="hint">D15</div>
+            <div class="muted2" aria-hidden="true"></div>
           </div>
           <input id="d15" type="number" step="any" value="0" inputmode="decimal">
         </div>
@@ -288,23 +296,48 @@
 
         <div class="pillrow">
           <div class="pill eq1">
-            <div class="k">EQ1</div>
+            <div class="k" id="k-eq1">EQ1</div>
             <div class="v" id="eq1">0</div>
           </div>
+
           <div class="pill eq2">
-            <div class="k">EQ2</div>
+            <div class="k" id="k-eq2">EQ2</div>
             <div class="v" id="eq2">0</div>
           </div>
+
           <div class="pill eq3">
-            <div class="k">EQ3</div>
+            <div class="k" id="k-eq3">EQ3</div>
             <div class="v" id="eq3">0</div>
           </div>
         </div>
-
-        <div class="note" id="rounding-note">
-          Display is rounded to whole numbers (no decimals). If you want decimals, tell me and I’ll change it to 2dp.
-        </div>
       </div>
+    </div>
+
+    <!-- Migration tiers (bottom) -->
+    <div class="card" style="margin-top:14px;">
+      <div class="tiers-title">
+        <h2 id="tiers-title">Migration tiers</h2>
+        <div class="muted2" id="tiers-sub">Based on your score range.</div>
+      </div>
+
+      <ul class="tiers" id="tiers-list">
+        <li class="tier">
+          <div class="name">Elite (1 spot)</div>
+          <div class="range">&gt;65M</div>
+        </li>
+        <li class="tier">
+          <div class="name">Advanced (5 spots)</div>
+          <div class="range">35M-65M</div>
+        </li>
+        <li class="tier">
+          <div class="name">Medium (40 spots)</div>
+          <div class="range">18M-35M</div>
+        </li>
+        <li class="tier">
+          <div class="name">Regular (60 spots)</div>
+          <div class="range">0M-18M</div>
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -323,6 +356,7 @@
       const EQ2 = ((3 * Mod) + Structure + Tech + Hero) / 4;
       const EQ3 = (Structure + Tech + Hero + Mod) * 0.265;
 
+      // Whole numbers (no decimals):
       el('eq1').textContent = Math.round(EQ1).toString();
       el('eq2').textContent = Math.round(EQ2).toString();
       el('eq3').textContent = Math.round(EQ3).toString();
@@ -347,7 +381,7 @@
 
       el('inputs-title').textContent = isJa ? '入力' : 'Inputs';
       el('inputs-sub').textContent   = isJa ? '戦力の数値を入力してください。' : 'Enter your power values.';
-      el('results-title').textContent= isJa ? '結果' : 'Results';
+      el('results-title').textContent= isJa ? '予想スコア' : 'Results';
       el('results-sub').textContent  = isJa ? '入力と同時に自動更新されます。' : 'Updates instantly as you type.';
 
       el('lbl-d12').textContent = isJa ? '建物戦力 / Structure' : 'Structure Power';
@@ -355,13 +389,32 @@
       el('lbl-d14').textContent = isJa ? 'Hero戦力 / Hero'       : 'Hero Power';
       el('lbl-d15').textContent = isJa ? '改造車戦力 / Mod'      : 'Mod Vehicle Power';
 
+      el('k-eq1').textContent = isJa ? 'EQ1・計算式1' : 'EQ1';
+      el('k-eq2').textContent = isJa ? 'EQ2・計算式2' : 'EQ2';
+      el('k-eq3').textContent = isJa ? 'EQ3・計算式3' : 'EQ3';
+
       el('eq-footer').textContent = isJa
-        ? 'EQ1=((3×改造車)+建物+研究+Hero)/6 ・ EQ2=/4 ・ EQ3=(建物+研究+Hero+改造車)×0.265'
+        ? 'EQ1・計算式1 / EQ2・計算式2 / EQ3・計算式3'
         : 'EQ1 = ((3×Mod)+Structure+Tech+Hero)/6 · EQ2 = /4 · EQ3 = (Structure+Tech+Hero+Mod)×0.265';
 
-      el('rounding-note').textContent = isJa
-        ? '表示は整数に丸めています（小数なし）。小数表示にしたい場合は言ってください。'
-        : 'Display is rounded to whole numbers (no decimals). If you want decimals, tell me and I’ll change it to 2dp.';
+      el('tiers-title').textContent = isJa ? '移行枠' : 'Migration tiers';
+      el('tiers-sub').textContent   = isJa ? 'スコア範囲の目安です。' : 'Based on your score range.';
+
+      // Update tiers list text (4 items)
+      const items = el('tiers-list').querySelectorAll('li.tier');
+      if(items.length === 4){
+        items[0].querySelector('.name').textContent  = isJa ? 'エリート (1枠)' : 'Elite (1 spot)';
+        items[0].querySelector('.range').textContent = '>65M';
+
+        items[1].querySelector('.name').textContent  = isJa ? 'アドバンスド (5枠)' : 'Advanced (5 spots)';
+        items[1].querySelector('.range').textContent = '35M-65M';
+
+        items[2].querySelector('.name').textContent  = isJa ? 'ミディアム (40枠)' : 'Medium (40 spots)';
+        items[2].querySelector('.range').textContent = '18M-35M';
+
+        items[3].querySelector('.name').textContent  = isJa ? 'レギュラー (60枠)' : 'Regular (60 spots)';
+        items[3].querySelector('.range').textContent = '0M-18M';
+      }
     }
 
     el('tab-en').addEventListener('click', () => setLang('en'));
