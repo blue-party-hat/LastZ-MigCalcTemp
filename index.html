@@ -30,7 +30,7 @@
         radial-gradient(700px 400px at 80% 10%, rgba(34,197,94,0.25), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       min-height: 100vh;
-      overflow-x: hidden; /* last-resort guard */
+      overflow-x: hidden;
     }
 
     .wrap{
@@ -45,7 +45,7 @@
       justify-content:space-between;
       gap:12px;
       margin-bottom: 14px;
-      flex-wrap: wrap; /* prevents overflow on small widths */
+      flex-wrap: wrap;
     }
 
     .brand{
@@ -119,7 +119,7 @@
       box-shadow: var(--shadow2);
       padding: 16px;
       backdrop-filter: blur(10px);
-      min-width: 0; /* important for grid overflow */
+      min-width: 0;
     }
 
     .card h2{
@@ -166,12 +166,12 @@
 
     .pillrow{
       display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr)); /* prevents pill overflow */
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin-top: 10px;
     }
     @media (max-width: 520px){
-      .pillrow{ grid-template-columns: 1fr; } /* stack on small screens */
+      .pillrow{ grid-template-columns: 1fr; }
       .tabs{ width: 100%; justify-content: center; }
       .tabbtn{ flex: 1 1 0; text-align:center; }
     }
@@ -206,9 +206,8 @@
       position: absolute;
       left: 0;
       top: calc(100% + 10px);
-
       width: max-content;
-      max-width: min(80vw, 360px); /* key mobile fix */
+      max-width: min(80vw, 360px);
       padding: 10px 12px;
       border-radius: 12px;
       background: rgba(12, 16, 30, 0.98);
@@ -217,9 +216,8 @@
       box-shadow: var(--shadow2);
       font-size: 12px;
       line-height: 1.35;
-
       white-space: normal;
-      overflow-wrap: anywhere; /* key: wrap long formulas */
+      overflow-wrap: anywhere;
       opacity: 0;
       transform: translateY(-4px);
       pointer-events: none;
@@ -245,7 +243,7 @@
       font-weight: 900;
       letter-spacing: 0.2px;
       line-height: 1.1;
-      overflow-wrap: anywhere; /* protect big numbers */
+      overflow-wrap: anywhere;
     }
     .pill .m{
       margin-top: 6px;
@@ -260,16 +258,25 @@
     .pill.eq2 .v{ color: #86efac; }
     .pill.eq3 .v{ color: #93c5fd; }
 
+    /* ── Tiers section ── */
     .tiers-title{
       display:flex;
-      justify-content:space-between;
       align-items:baseline;
       gap:10px;
       margin: 0 0 10px;
       flex-wrap: wrap;
       min-width: 0;
     }
-    .tiers-title h2{ margin:0; }
+    .tiers-title h2{ margin:0; flex-shrink: 0; }
+
+    .tiers-note{
+      font-size: 11px;
+      color: rgba(255,200,80,0.85);
+      font-style: italic;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
     .tiers{
       list-style: none;
       padding: 0;
@@ -277,27 +284,68 @@
       display:grid;
       gap: 10px;
     }
-    .tier{
+
+    /* Column header row */
+    .tier-header{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 4px 12px;
+      min-width: 0;
+    }
+    .tier-header .col-label{
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      text-align: right;
+    }
+    .tier-header .col-label:first-child{
+      text-align: left;
+    }
+
+    /* Range columns wrapper inside each tier row */
+    .tier-ranges{
       display:flex;
-      justify-content:space-between;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .tier-range-new{
+      color: #86efac;
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .tier-range-sep{
+      color: var(--muted2);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tier-range-old{
+      color: var(--muted2);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tier{
+      display:grid;
+      grid-template-columns: 1fr auto;
       gap: 12px;
       padding: 12px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.06);
-      flex-wrap: wrap; /* prevent overflow */
+      align-items: center;
       min-width: 0;
     }
     .tier .name{
       font-weight: 900;
       letter-spacing: 0.2px;
       color: rgba(255,255,255,0.92);
-      overflow-wrap:anywhere;
-    }
-    .tier .range{
-      color: var(--muted);
-      font-weight: 800;
-      white-space: nowrap;
+      overflow-wrap: anywhere;
     }
   </style>
 </head>
@@ -406,26 +454,51 @@
 
     <div class="card" style="margin-top:14px;">
       <div class="tiers-title">
-        <h2 id="tiers-title">Migration tiers</h2>
-        <div class="muted2" id="tiers-sub">Based on your score range.</div>
+        <h2 id="tiers-heading">Migration Tiers</h2>
+        <span class="tiers-note" id="tiers-note">
+          ⚠️ New numbers are from a recently uploaded video — may differ depending on your timing of migration and server pools.
+        </span>
+      </div>
+      <div class="muted2" id="tiers-sub" style="margin-bottom:10px;">Based on your score range.</div>
+
+      <!-- Column header -->
+      <div class="tier-header">
+        <div class="col-label" id="col-tier-label">Tier</div>
+        <div class="col-label" id="col-range-label">New &nbsp;|&nbsp; Old</div>
       </div>
 
       <ul class="tiers" id="tiers-list">
         <li class="tier">
-          <div class="name">Elite (1 spot)</div>
-          <div class="range">&gt;65M</div>
+          <div class="name" id="tier-name-0">Elite (1 spot)</div>
+          <div class="tier-ranges">
+            <span class="tier-range-new" id="tier-new-0">&gt;100M</span>
+            <span class="tier-range-sep">|</span>
+            <span class="tier-range-old" id="tier-old-0">(&gt;65M)</span>
+          </div>
         </li>
         <li class="tier">
-          <div class="name">Advanced (5 spots)</div>
-          <div class="range">35M-65M</div>
+          <div class="name" id="tier-name-1">Advanced (5 spots)</div>
+          <div class="tier-ranges">
+            <span class="tier-range-new" id="tier-new-1">40M–100M</span>
+            <span class="tier-range-sep">|</span>
+            <span class="tier-range-old" id="tier-old-1">(35M–65M)</span>
+          </div>
         </li>
         <li class="tier">
-          <div class="name">Medium (40 spots)</div>
-          <div class="range">18M-35M</div>
+          <div class="name" id="tier-name-2">Medium (40 spots)</div>
+          <div class="tier-ranges">
+            <span class="tier-range-new" id="tier-new-2">20M–40M</span>
+            <span class="tier-range-sep">|</span>
+            <span class="tier-range-old" id="tier-old-2">(18M–35M)</span>
+          </div>
         </li>
         <li class="tier">
-          <div class="name">Regular (60 spots)</div>
-          <div class="range">0M-18M</div>
+          <div class="name" id="tier-name-3">Regular (60 spots)</div>
+          <div class="tier-ranges">
+            <span class="tier-range-new" id="tier-new-3">0M–20M</span>
+            <span class="tier-range-sep">|</span>
+            <span class="tier-range-old" id="tier-old-3">(0M–18M)</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -470,12 +543,27 @@
     ['d12','d13','d14','d15'].forEach(id => el(id).addEventListener('input', recalc));
     recalc();
 
+    // ── Tier data ──
+    const TIERS = {
+      en: [
+        { name: 'Elite (1 spot)',     newRange: '>100M',    oldRange: '(>65M)'      },
+        { name: 'Advanced (5 spots)', newRange: '40M–100M', oldRange: '(35M–65M)'   },
+        { name: 'Medium (40 spots)',  newRange: '20M–40M',  oldRange: '(18M–35M)'   },
+        { name: 'Regular (60 spots)', newRange: '0M–20M',   oldRange: '(0M–18M)'    },
+      ],
+      ja: [
+        { name: 'エリート (1枠)',         newRange: '>100M',    oldRange: '(>65M)'      },
+        { name: 'アドバンスド (5枠)',      newRange: '40M–100M', oldRange: '(35M–65M)'   },
+        { name: 'ミディアム (40枠)',       newRange: '20M–40M',  oldRange: '(18M–35M)'   },
+        { name: 'レギュラー (60枠)',       newRange: '0M–20M',   oldRange: '(0M–18M)'    },
+      ]
+    };
+
     function setLang(lang){
       const isJa = (lang === 'ja');
 
       el('panel-en').classList.toggle('active', !isJa);
       el('panel-ja').classList.toggle('active', isJa);
-
       el('tab-en').classList.toggle('active', !isJa);
       el('tab-ja').classList.toggle('active', isJa);
 
@@ -484,15 +572,15 @@
         ? 'コミュニティ式（目安）。実際の移行スコアはサーバー要因で変動する可能性があります。'
         : 'Community equations. Actual migration score may vary by server factors.';
 
-      el('inputs-title').textContent = isJa ? '入力' : 'Inputs';
-      el('inputs-sub').textContent   = isJa ? '戦力の数値を入力してください。' : 'Enter your power values.';
-      el('results-title').textContent= isJa ? '予想スコア' : 'Results';
-      el('results-sub').textContent  = isJa ? '入力と同時に自動更新されます。' : 'Updates instantly as you type.';
+      el('inputs-title').textContent  = isJa ? '入力'        : 'Inputs';
+      el('inputs-sub').textContent    = isJa ? '戦力の数値を入力してください。' : 'Enter your power values.';
+      el('results-title').textContent = isJa ? '予想スコア'   : 'Results';
+      el('results-sub').textContent   = isJa ? '入力と同時に自動更新されます。' : 'Updates instantly as you type.';
 
       el('lbl-d12').textContent = isJa ? '建物戦力 / Structure' : 'Structure Power';
       el('lbl-d13').textContent = isJa ? '研究戦力 / Tech'      : 'Tech Power';
-      el('lbl-d14').textContent = isJa ? 'Hero戦力 / Hero'       : 'Hero Power';
-      el('lbl-d15').textContent = isJa ? '改造車戦力 / Mod'      : 'Mod Vehicle Power';
+      el('lbl-d14').textContent = isJa ? 'Hero戦力 / Hero'      : 'Hero Power';
+      el('lbl-d15').textContent = isJa ? '改造車戦力 / Mod'     : 'Mod Vehicle Power';
 
       el('k-eq1').textContent = isJa ? 'EQ1・計算式1' : 'EQ1';
       el('k-eq2').textContent = isJa ? 'EQ2・計算式2' : 'EQ2';
@@ -511,23 +599,21 @@
         : 'EQ3: (Structure + Tech + Hero + Mod Vehicle) × 0.265'
       );
 
-      el('tiers-title').textContent = isJa ? '移行枠' : 'Migration tiers';
-      el('tiers-sub').textContent   = isJa ? 'スコア範囲の目安です。' : 'Based on your score range.';
+      el('tiers-heading').textContent = isJa ? '移行枠'    : 'Migration Tiers';
+      el('tiers-sub').textContent     = isJa ? 'スコア範囲の目安です。' : 'Based on your score range.';
+      el('tiers-note').textContent    = isJa
+        ? '⚠️ 新しい数値は最近公開された動画より — 移行タイミングやサーバープールによって異なる場合があります。'
+        : '⚠️ New numbers are from a recently uploaded video — may differ depending on your timing of migration and server pools.';
 
-      const items = el('tiers-list').querySelectorAll('li.tier');
-      if(items.length === 4){
-        items[0].querySelector('.name').textContent  = isJa ? 'エリート (1枠)' : 'Elite (1 spot)';
-        items[0].querySelector('.range').textContent = '>65M';
+      el('col-tier-label').textContent  = isJa ? '枠'          : 'Tier';
+      el('col-range-label').textContent = isJa ? '新 ｜ 旧'    : 'New \u00a0|\u00a0 Old';
 
-        items[1].querySelector('.name').textContent  = isJa ? 'アドバンスド (5枠)' : 'Advanced (5 spots)';
-        items[1].querySelector('.range').textContent = '35M-65M';
-
-        items[2].querySelector('.name').textContent  = isJa ? 'ミディアム (40枠)' : 'Medium (40 spots)';
-        items[2].querySelector('.range').textContent = '18M-35M';
-
-        items[3].querySelector('.name').textContent  = isJa ? 'レギュラー (60枠)' : 'Regular (60 spots)';
-        items[3].querySelector('.range').textContent = '0M-18M';
-      }
+      const data = TIERS[isJa ? 'ja' : 'en'];
+      data.forEach((t, i) => {
+        el(`tier-name-${i}`).textContent = t.name;
+        el(`tier-new-${i}`).textContent  = t.newRange;
+        el(`tier-old-${i}`).textContent  = t.oldRange;
+      });
     }
 
     el('tab-en').addEventListener('click', () => setLang('en'));
