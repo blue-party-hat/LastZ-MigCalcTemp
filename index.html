@@ -7,14 +7,13 @@
   <style>
     :root{
       --bg0:#0b1020;--bg1:#0f1733;--border:rgba(255,255,255,0.14);
-      --text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.70);--muted2:rgba(255,255,255,0.60);
+      --text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.70);--muted2:rgba(255,255,255,0.55);
       --shadow:0 10px 30px rgba(0,0,0,0.35);--shadow2:0 18px 60px rgba(0,0,0,0.45);
       --radius2:22px;--ring:0 0 0 3px rgba(124,58,237,0.35);
     }
     *{box-sizing:border-box}
-    html,body{width:100%}
+    html,body{width:100%;margin:0}
     body{
-      margin:0;
       font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
       color:var(--text);
       background:radial-gradient(900px 500px at 20% 0%,rgba(124,58,237,0.35),transparent 60%),
@@ -25,85 +24,116 @@
     .wrap{max-width:980px;margin:26px auto 60px;padding:0 16px}
     .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
     .brand{display:flex;flex-direction:column;gap:2px;min-width:240px;flex:1 1 240px}
-    .brand h1{font-size:20px;margin:0;letter-spacing:.2px;overflow-wrap:anywhere}
-    .brand p{margin:0;color:var(--muted);font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+    .brand h1{font-size:20px;margin:0;letter-spacing:.2px}
+    .brand p{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
     .tabs{display:flex;gap:8px;padding:6px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);backdrop-filter:blur(10px);flex:0 0 auto}
     .tabbtn{border:1px solid transparent;background:transparent;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;font-weight:700;letter-spacing:.2px;transition:all .15s;white-space:nowrap}
     .tabbtn:hover{color:var(--text);background:rgba(255,255,255,0.06)}
     .tabbtn.active{color:#fff;background:linear-gradient(135deg,rgba(124,58,237,0.95),rgba(34,197,94,0.75));box-shadow:0 8px 20px rgba(124,58,237,0.25)}
-    .tabbtn:focus-visible{outline:none;box-shadow:var(--ring)}
     .panel{display:none;margin:10px 0 16px}.panel.active{display:block}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:14px}
-    .card{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,0.10),rgba(255,255,255,0.06));border-radius:var(--radius2);box-shadow:var(--shadow2);padding:16px;backdrop-filter:blur(10px);min-width:0}
-    .card h2{margin:0 0 8px;font-size:16px;letter-spacing:.2px;overflow-wrap:anywhere}
-    .muted{color:var(--muted);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
-    .muted2{color:var(--muted2);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
-    .field{margin:12px 0}
-    .labelrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px;min-width:0}
-    label{font-weight:800;font-size:13px;letter-spacing:.2px;overflow-wrap:anywhere}
-    input{width:100%;padding:12px;font-size:16px;color:var(--text);background:rgba(10,14,28,0.55);border:1px solid rgba(255,255,255,0.14);border-radius:14px;transition:border .15s,box-shadow .15s;min-width:0}
-    input:hover{border-color:rgba(255,255,255,0.22)}
-    input:focus{outline:none;border-color:rgba(124,58,237,0.55);box-shadow:var(--ring)}
+    .card{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,0.10),rgba(255,255,255,0.06));border-radius:var(--radius2);box-shadow:var(--shadow2);padding:18px;backdrop-filter:blur(10px);min-width:0}
+    .card h2{margin:0 0 6px;font-size:16px;letter-spacing:.2px}
+    .muted{color:var(--muted);font-size:13px;line-height:1.5}
+    .muted2{color:var(--muted2);font-size:12px;line-height:1.5}
+
+    /* inputs */
+    .field{margin:10px 0}
+    label{display:block;font-weight:800;font-size:13px;letter-spacing:.2px;margin-bottom:5px}
+    input[type=number]{width:100%;padding:12px;font-size:16px;color:var(--text);background:rgba(10,14,28,0.55);border:1px solid rgba(255,255,255,0.14);border-radius:14px;transition:border .15s,box-shadow .15s;outline:none}
+    input[type=number]:hover{border-color:rgba(255,255,255,0.22)}
+    input[type=number]:focus{border-color:rgba(124,58,237,0.55);box-shadow:var(--ring)}
+    .hint{font-size:11px;color:var(--muted2);margin-top:3px}
+
+    /* calculate button */
+    .calc-btn{
+      width:100%;margin-top:14px;padding:15px;
+      background:linear-gradient(135deg,rgba(124,58,237,0.9),rgba(34,197,94,0.75));
+      color:#fff;border:none;border-radius:16px;cursor:pointer;
+      font-size:16px;font-weight:800;letter-spacing:.3px;
+      box-shadow:0 8px 24px rgba(124,58,237,0.3);
+      transition:opacity .15s,transform .12s;
+    }
+    .calc-btn:hover{opacity:.88;transform:translateY(-1px)}
+    .calc-btn:active{transform:translateY(0)}
+
+    /* community eq pills */
     .pillrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
     @media(max-width:520px){.pillrow{grid-template-columns:1fr}.tabs{width:100%;justify-content:center}.tabbtn{flex:1 1 0;text-align:center}}
-    .pill{border-radius:16px;padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);position:relative;min-width:0}
-    .tip{display:inline-flex;align-items:center;gap:8px;cursor:help;user-select:none;position:relative;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);max-width:100%}
-    .tip:focus-visible{outline:none;box-shadow:var(--ring)}
-    .tip::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 10px);width:max-content;max-width:min(80vw,360px);padding:10px 12px;border-radius:12px;background:rgba(12,16,30,0.98);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);box-shadow:var(--shadow2);font-size:12px;line-height:1.35;white-space:normal;overflow-wrap:anywhere;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .12s,transform .12s;z-index:10}
-    .tip:hover::after,.tip:focus::after{opacity:1;transform:translateY(0)}
-    .pill .k{color:var(--muted);font-size:12px;font-weight:900;letter-spacing:.2px;margin-bottom:10px;min-width:0}
-    .pill .v{font-size:22px;font-weight:900;letter-spacing:.2px;line-height:1.1;overflow-wrap:anywhere}
-    .pill .m{margin-top:6px;font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.2px;overflow-wrap:anywhere}
+    .pill{border-radius:16px;padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);min-width:0}
+    .pill .k{color:var(--muted2);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px}
+    .pill .v{font-size:20px;font-weight:900;line-height:1.1}
     .pill.eq1 .v{color:#a78bfa}.pill.eq2 .v{color:#86efac}.pill.eq3 .v{color:#93c5fd}
+    .tip{display:inline-flex;align-items:center;cursor:help;user-select:none;position:relative}
+    .tip::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 8px);width:max-content;max-width:min(80vw,320px);padding:9px 11px;border-radius:11px;background:rgba(12,16,30,0.98);border:1px solid rgba(255,255,255,0.12);color:var(--text);font-size:11px;line-height:1.4;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .12s,transform .12s;z-index:20;white-space:normal}
+    .tip:hover::after{opacity:1;transform:translateY(0)}
 
-    /* rank result pill — full width */
-    .rank-result{margin-top:14px;padding:14px 16px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);display:flex;flex-direction:column;gap:6px}
-    .rank-result .rr-label{font-size:11px;font-weight:900;letter-spacing:.3px;color:var(--muted2);text-transform:uppercase}
-    .rank-result .rr-badge{display:inline-block;padding:5px 16px;border-radius:999px;font-weight:900;font-size:19px}
-    .rr-Elite{background:rgba(167,139,250,0.15);color:#c4b5fd}
-    .rr-Advanced{background:rgba(34,197,94,0.12);color:#86efac}
-    .rr-Medium{background:rgba(251,191,36,0.12);color:#fcd34d}
-    .rr-Regular{background:rgba(255,255,255,0.07);color:var(--muted)}
-    .rr-conf{display:flex;align-items:center;gap:8px;margin-top:4px}
-    .rr-conf-bar-bg{flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:999px;overflow:hidden}
-    .rr-conf-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(124,58,237,0.8),rgba(34,197,94,0.7));transition:width .5s cubic-bezier(.16,1,.3,1)}
-    .rr-conf-txt{font-size:12px;color:var(--muted2);white-space:nowrap}
-    .rr-nearest{font-size:11px;color:var(--muted2);margin-top:2px}
+    /* ── ML result block — PROMINENT ── */
+    .ml-block{
+      margin-top:14px;
+      border:1px solid rgba(124,58,237,0.4);
+      background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(34,197,94,0.08));
+      border-radius:18px;padding:18px;
+    }
+    .ml-block-label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.35px;color:var(--muted2);margin-bottom:10px}
+
+    .ml-score-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+    .ml-score-num{font-size:42px;font-weight:900;line-height:1;color:#fff}
+    .ml-score-unit{font-size:20px;font-weight:700;color:var(--muted);margin-left:2px}
+    .ml-score-range{font-size:12px;color:var(--muted2);align-self:flex-end;padding-bottom:4px}
+
+    .ml-rank-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+    .ml-rank-badge{padding:6px 18px;border-radius:999px;font-weight:900;font-size:18px}
+    .badge-Elite{background:rgba(167,139,250,0.2);color:#c4b5fd;border:1px solid rgba(167,139,250,0.35)}
+    .badge-Advanced{background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3)}
+    .badge-Medium{background:rgba(251,191,36,0.12);color:#fcd34d;border:1px solid rgba(251,191,36,0.25)}
+    .badge-Regular{background:rgba(255,255,255,0.07);color:var(--muted);border:1px solid rgba(255,255,255,0.12)}
+    .ml-rank-nearest{font-size:12px;color:var(--muted2)}
+
+    .ml-conf-row{display:flex;align-items:center;gap:10px}
+    .ml-conf-label{font-size:12px;color:var(--muted2);white-space:nowrap}
+    .ml-conf-bg{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
+    .ml-conf-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(124,58,237,0.8),rgba(34,197,94,0.7));transition:width .5s cubic-bezier(.16,1,.3,1);width:0%}
+    .ml-conf-pct{font-size:13px;font-weight:800;color:var(--text);white-space:nowrap}
 
     /* percentile bars */
-    .pct-bars{margin-top:14px;display:flex;flex-direction:column;gap:9px}
-    .pct-row{display:grid;grid-template-columns:90px 1fr 38px;gap:8px;align-items:center}
+    .pct-section{margin-top:14px}
+    .pct-title{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.3px;color:var(--muted2);margin-bottom:8px}
+    .pct-row{display:grid;grid-template-columns:80px 1fr 36px;gap:8px;align-items:center;margin-bottom:7px}
     .pct-name{font-size:12px;color:var(--muted2);text-align:right}
     .pct-track{background:rgba(255,255,255,0.08);border-radius:999px;height:7px;overflow:hidden}
     .pct-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(124,58,237,0.7),rgba(34,197,94,0.6));transition:width .5s cubic-bezier(.16,1,.3,1)}
-    .pct-val{font-size:12px;font-weight:700;text-align:right;color:var(--muted)}
+    .pct-val{font-size:12px;font-weight:700;color:var(--muted2);text-align:right}
+
+    /* placeholder state */
+    .ml-placeholder{text-align:center;padding:16px 0;color:var(--muted2);font-size:14px}
 
     /* tier table */
-    .tiers-title{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;flex-wrap:wrap;min-width:0}
-    .tiers-title h2{margin:0;flex-shrink:0}
-    .tiers-note{font-size:11px;color:rgba(255,200,80,0.85);font-style:italic;line-height:1.35;overflow-wrap:anywhere}
+    .tiers-title{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;flex-wrap:wrap}
+    .tiers-title h2{margin:0}
+    .tiers-note{font-size:11px;color:rgba(255,200,80,0.85);font-style:italic;line-height:1.35}
     .tiers{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-    .tier-header{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:4px 12px;min-width:0}
+    .tier-header{display:grid;grid-template-columns:1fr auto;gap:12px;padding:4px 12px}
     .col-label{font-size:11px;font-weight:900;letter-spacing:.3px;color:var(--muted2);text-transform:uppercase;text-align:right}
     .col-label:first-child{text-align:left}
+    .tier{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);align-items:center}
+    .tier .name{font-weight:900;color:var(--text)}
     .tier-ranges{display:flex;gap:6px;align-items:center;flex-shrink:0}
     .tier-range-new{color:#86efac;font-weight:800;font-size:13px;white-space:nowrap}
     .tier-range-sep{color:var(--muted2);font-size:12px;font-weight:700}
     .tier-range-old{color:var(--muted2);font-size:12px;font-weight:700;white-space:nowrap}
-    .tier{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);align-items:center;min-width:0}
-    .tier .name{font-weight:900;letter-spacing:.2px;color:var(--text);overflow-wrap:anywhere}
 
-    /* sample ref table */
-    .ref-table-wrap{margin-top:10px;overflow-x:auto}
+    /* ref table */
+    .ref-table-wrap{margin-top:8px;overflow-x:auto}
     table{width:100%;border-collapse:collapse;font-size:12px}
-    th{padding:7px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.12);color:var(--muted2);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:11px;white-space:nowrap}
+    th{padding:7px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.12);color:var(--muted2);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:10px;white-space:nowrap}
     td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.07);vertical-align:top;white-space:nowrap}
     tr:last-child td{border-bottom:none}
     .tc{font-size:10px;color:var(--muted2);display:block;margin-top:1px}
 
     /* formula */
-    .formula-box{margin-top:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px}
-    .formula-box code{font-family:ui-monospace,monospace;font-size:11px;color:#93c5fd;word-break:break-word;line-height:1.9}
+    .formula-box{margin-top:10px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px}
+    .formula-box code{font-family:ui-monospace,monospace;font-size:11px;color:#93c5fd;word-break:break-word;line-height:1.9;white-space:pre}
     .note{font-size:11px;color:var(--muted2);margin-top:8px;line-height:1.6}
   </style>
 </head>
@@ -115,7 +145,7 @@
       <h1 id="title-top">Migration Score Calculator</h1>
       <p id="subtitle-top">Community equations + sample-based ML estimate (R²≈0.97). Not an official formula.</p>
     </div>
-    <div class="tabs" role="tablist" aria-label="Language tabs">
+    <div class="tabs" role="tablist">
       <button class="tabbtn active" id="tab-en" type="button">English</button>
       <button class="tabbtn" id="tab-ja" type="button">日本語</button>
     </div>
@@ -124,54 +154,51 @@
   <section class="panel active" id="panel-en"><div class="muted">Not an official calculator. Use as a rough estimate.</div></section>
   <section class="panel" id="panel-ja"><div class="muted">※公式計算式ではありません。目安としてご利用ください。</div></section>
 
-  <!-- inputs + results -->
   <div class="grid">
+
+    <!-- LEFT: inputs -->
     <div class="card">
       <h2 id="inputs-title">Inputs</h2>
       <div class="muted2" id="inputs-sub">Enter your power values in millions (M).</div>
-      <div class="field"><div class="labelrow"><label id="lbl-d12">Building Power (M)</label></div><input id="d12" type="number" step="any" value="" placeholder="e.g. 100" inputmode="decimal"></div>
-      <div class="field"><div class="labelrow"><label id="lbl-d13">Science Power (M)</label></div><input id="d13" type="number" step="any" value="" placeholder="e.g. 30" inputmode="decimal"></div>
-      <div class="field"><div class="labelrow"><label id="lbl-d14">Hero Power (M)</label></div><input id="d14" type="number" step="any" value="" placeholder="e.g. 88" inputmode="decimal"></div>
-      <div class="field"><div class="labelrow"><label id="lbl-d15">Tank (Mod Vehicle) Power (M)</label></div><input id="d15" type="number" step="any" value="" placeholder="e.g. 15" inputmode="decimal"></div>
-      <div class="field"><div class="labelrow"><label id="lbl-d16">Kills (M)</label></div><input id="d16" type="number" step="any" value="" placeholder="e.g. 6" inputmode="decimal"></div>
+
+      <div class="field"><label id="lbl-d12">Building Power (M)</label><input id="d12" type="number" step="any" placeholder="e.g. 100" inputmode="decimal"><div class="hint" id="hint-d12">Sample range: 54 – 268 M</div></div>
+      <div class="field"><label id="lbl-d13">Science Power (M)</label><input id="d13" type="number" step="any" placeholder="e.g. 30" inputmode="decimal"><div class="hint" id="hint-d13">Sample range: 16 – 65 M</div></div>
+      <div class="field"><label id="lbl-d14">Hero Power (M)</label><input id="d14" type="number" step="any" placeholder="e.g. 88" inputmode="decimal"><div class="hint" id="hint-d14">Sample range: 57 – 183 M</div></div>
+      <div class="field"><label id="lbl-d15">Tank (Mod Vehicle) Power (M)</label><input id="d15" type="number" step="any" placeholder="e.g. 15" inputmode="decimal"><div class="hint" id="hint-d15">Sample range: 8 – 43 M · Highest weight</div></div>
+      <div class="field"><label id="lbl-d16">Kills (M)</label><input id="d16" type="number" step="any" placeholder="e.g. 6" inputmode="decimal"><div class="hint" id="hint-d16">Sample range: 0.6 – 31.4 M</div></div>
+
+      <button class="calc-btn" id="calcBtn">⚡ Calculate Score</button>
     </div>
 
+    <!-- RIGHT: results -->
     <div class="card">
       <h2 id="results-title">Results</h2>
-      <div class="muted2" id="results-sub">Updates instantly as you type.</div>
+      <div class="muted2" id="results-sub">Press Calculate or type to update.</div>
 
+      <!-- community equations -->
       <div class="pillrow">
         <div class="pill eq1">
-          <div class="k"><span class="tip" id="tip-eq1" tabindex="0" data-tip="EQ1"><span id="k-eq1">EQ1</span></span></div>
-          <div class="v" id="eq1">—</div><div class="m" id="eq1m">—</div>
+          <div class="k"><span class="tip" id="tip-eq1" data-tip="EQ1: ((3×Tank) + Build + Science + Hero) / 6"><span id="k-eq1">EQ1</span></span></div>
+          <div class="v" id="eq1">—</div>
         </div>
         <div class="pill eq2">
-          <div class="k"><span class="tip" id="tip-eq2" tabindex="0" data-tip="EQ2"><span id="k-eq2">EQ2</span></span></div>
-          <div class="v" id="eq2">—</div><div class="m" id="eq2m">—</div>
+          <div class="k"><span class="tip" id="tip-eq2" data-tip="EQ2: ((3×Tank) + Build + Science + Hero) / 4"><span id="k-eq2">EQ2</span></span></div>
+          <div class="v" id="eq2">—</div>
         </div>
         <div class="pill eq3">
-          <div class="k"><span class="tip" id="tip-eq3" tabindex="0" data-tip="EQ3"><span id="k-eq3">EQ3</span></span></div>
-          <div class="v" id="eq3">—</div><div class="m" id="eq3m">—</div>
+          <div class="k"><span class="tip" id="tip-eq3" data-tip="EQ3: (Build + Science + Hero + Tank) × 0.265"><span id="k-eq3">EQ3</span></span></div>
+          <div class="v" id="eq3">—</div>
         </div>
       </div>
 
-      <!-- ML estimate -->
-      <div class="rank-result">
-        <div class="rr-label" id="rr-label">ML Estimate (sample-based)</div>
-        <div>
-          <span id="rr-score" style="font-size:22px;font-weight:900">—</span>
-          <span class="muted2" style="font-size:13px;margin-left:6px" id="rr-score-range"></span>
+      <!-- ML estimate — BIG DISPLAY -->
+      <div class="ml-block" id="ml-block">
+        <div class="ml-block-label" id="ml-label">ML Estimate (111-sample model)</div>
+        <div id="ml-content">
+          <div class="ml-placeholder" id="ml-placeholder">Enter your stats and press Calculate</div>
         </div>
-        <div><span class="rr-badge" id="rr-badge">—</span></div>
-        <div class="rr-conf">
-          <div class="rr-conf-bar-bg"><div class="rr-conf-bar" id="rr-conf-bar" style="width:0%"></div></div>
-          <div class="rr-conf-txt" id="rr-conf-txt">—</div>
-        </div>
-        <div class="rr-nearest" id="rr-nearest"></div>
       </div>
 
-      <!-- percentile bars -->
-      <div class="pct-bars" id="pct-bars"></div>
     </div>
   </div>
 
@@ -179,7 +206,7 @@
   <div class="card" style="margin-top:14px">
     <div class="tiers-title">
       <h2 id="tiers-heading">Migration Tiers</h2>
-      <span class="tiers-note" id="tiers-note">⚠️ New numbers are from a recently uploaded video — may differ by server and timing.</span>
+      <span class="tiers-note" id="tiers-note">⚠️ Ranges derived from survey sample — may vary by server and timing.</span>
     </div>
     <div class="muted2" id="tiers-sub" style="margin-bottom:10px">Based on your score range.</div>
     <div class="tier-header">
@@ -194,7 +221,7 @@
     </ul>
   </div>
 
-  <!-- sample reference + formula -->
+  <!-- reference + formula -->
   <div class="grid" style="margin-top:14px">
     <div class="card">
       <h2 id="ref-title">Sample Reference (Medians)</h2>
@@ -205,11 +232,11 @@
       <h2 id="formula-title">ML Formula (Ridge Regression)</h2>
       <div class="muted2" id="formula-sub">Trained on the migration survey spreadsheet.</div>
       <div class="formula-box"><code id="formula-el"></code></div>
-      <div class="note" id="formula-note">Tank and science are the strongest predictors (57% and 28% feature importance). Build and kills have minimal weight. Regular rank only has 2 samples — treat as unreliable.</div>
+      <div class="note" id="formula-note">Tank and science are the strongest predictors (57% and 28% importance). Build and kills have minimal weight. Regular rank only has 2 samples — treat as unreliable.</div>
     </div>
   </div>
 
-</div><!-- /wrap -->
+</div>
 
 <script>
 (function(){
@@ -218,11 +245,11 @@ const STATS={"Regular": {"count": 2, "score": {"min": 36.0, "median": 37.5, "max
 const COEF={"build": -0.0677, "science": 2.6296, "hero": 1.2306, "tank": 3.9202, "kills": 0.3826};
 const INTERCEPT=-123.14;
 const FEAT=['build','science','hero','tank','kills'];
-const FEAT_IDS=['d12','d13','d14','d15','d16'];
-const FEAT_LABEL_EN=['Building','Science','Hero','Tank','Kills'];
-const FEAT_LABEL_JA=['建物','研究','Hero','改造車','キル数'];
+const IDS=['d12','d13','d14','d15','d16'];
+const LABELS_EN=['Building','Science','Hero','Tank','Kills'];
+const LABELS_JA=['建物','研究','Hero','改造車','キル数'];
 
-// ── build ref table
+// build ref table
 (function(){
   const t=document.getElementById('ref-table');
   t.innerHTML='<thead><tr><th>Rank</th><th>Score</th><th>Tank</th><th>Science</th><th>Hero</th><th>Build</th><th>n</th></tr></thead>';
@@ -232,18 +259,18 @@ const FEAT_LABEL_JA=['建物','研究','Hero','改造車','キル数'];
     const s=STATS[r];
     const tr=document.createElement('tr');
     tr.innerHTML=`<td style="font-weight:800">${r}</td>
-    <td>${s.score.median}<span class="tc">${s.score.min}–${s.score.max}</span></td>
-    <td>${s.tank.median}<span class="tc">${s.tank.min}–${s.tank.max}</span></td>
-    <td>${s.science.median}<span class="tc">${s.science.min}–${s.science.max}</span></td>
-    <td>${s.hero.median}<span class="tc">${s.hero.min}–${s.hero.max}</span></td>
-    <td>${s.build.median}<span class="tc">${s.build.min}–${s.build.max}</span></td>
+    <td>${s.score.median}M<span class="tc">${s.score.min}–${s.score.max}</span></td>
+    <td>${s.tank.median}M<span class="tc">${s.tank.min}–${s.tank.max}</span></td>
+    <td>${s.science.median}M<span class="tc">${s.science.min}–${s.science.max}</span></td>
+    <td>${s.hero.median}M<span class="tc">${s.hero.min}–${s.hero.max}</span></td>
+    <td>${s.build.median}M<span class="tc">${s.build.min}–${s.build.max}</span></td>
     <td style="color:var(--muted2)">${s.count}</td>`;
     tb.appendChild(tr);
   });
   t.appendChild(tb);
 })();
 
-// ── formula display
+// build formula
 (function(){
   const parts=FEAT.map(f=>`  ${COEF[f]>=0?'+ ':'- '}${Math.abs(COEF[f]).toFixed(3)} × ${f}`);
   document.getElementById('formula-el').textContent=`score ≈ ${INTERCEPT}
@@ -251,82 +278,99 @@ const FEAT_LABEL_JA=['建物','研究','Hero','改造車','キル数'];
 ');
 })();
 
-// ── helpers
 const g=id=>document.getElementById(id);
-const n=v=>parseFloat(v)||0;
+const nv=id=>parseFloat(g(id).value)||0;
 const dist=(a,b)=>Math.sqrt(FEAT.reduce((s,k)=>s+Math.pow(a[k]-b[k],2),0));
-const linearScore=v=>INTERCEPT+FEAT.reduce((s,k)=>s+COEF[k]*v[k],0);
-function knnScore(v,k=15){
+const linScore=v=>INTERCEPT+FEAT.reduce((s,k)=>s+COEF[k]*v[k],0);
+function knn(v,k=15){
   const s=[...DATA].map(r=>({...r,d:dist(v,r)})).sort((a,b)=>a.d-b.d).slice(0,k);
   const w=s.map(r=>1/(r.d+1e-9));const ws=w.reduce((a,b)=>a+b,0);
-  return{score:s.reduce((sum,r,i)=>sum+r.migration_score*w[i],0)/ws,nearest:s[0],knn:s};
+  return{score:s.reduce((sum,r,i)=>sum+r.migration_score*w[i],0)/ws,nearest:s[0],top5:s.slice(0,5)};
 }
-const predictRank=sc=>sc>=160?'Elite':sc>=80?'Advanced':sc>=40?'Medium':'Regular';
+const rankOf=sc=>sc>=160?'Elite':sc>=80?'Advanced':sc>=40?'Medium':'Regular';
 
-function recalc(){
-  const build=n(g('d12').value),science=n(g('d13').value),hero=n(g('d14').value),tank=n(g('d15').value),kills=n(g('d16').value);
+let calculated=false;
 
-  // legacy community equations (keep as-is — these used raw power values)
-  // convert M inputs to raw for old equations if needed, but since inputs are now in M, adjust:
+function runCalc(){
+  calculated=true;
+  const build=nv('d12'),science=nv('d13'),hero=nv('d14'),tank=nv('d15'),kills=nv('d16');
+
+  // community EQ
   const EQ1=((3*tank)+build+science+hero)/6;
   const EQ2=((3*tank)+build+science+hero)/4;
   const EQ3=(build+science+hero+tank)*0.265;
-  g('eq1').textContent=EQ1.toFixed(1);g('eq1m').textContent=EQ1.toFixed(1)+'M';
-  g('eq2').textContent=EQ2.toFixed(1);g('eq2m').textContent=EQ2.toFixed(1)+'M';
-  g('eq3').textContent=EQ3.toFixed(1);g('eq3m').textContent=EQ3.toFixed(1)+'M';
+  g('eq1').textContent=EQ1.toFixed(1)+'M';
+  g('eq2').textContent=EQ2.toFixed(1)+'M';
+  g('eq3').textContent=EQ3.toFixed(1)+'M';
 
-  // ML estimate
+  // ML
   const v={build,science,hero,tank,kills};
-  const{score,nearest,knn}=knnScore(v);
-  const lin=linearScore(v);
+  const{score,nearest,top5}=knn(v);
+  const lin=linScore(v);
   const blended=score*0.65+lin*0.35;
-  const rank=predictRank(blended);
-  const topD=knn.slice(0,5).reduce((s,r)=>s+r.d,0)/5;
+  const rank=rankOf(blended);
+  const topD=top5.reduce((s,r)=>s+r.d,0)/top5.length;
   const conf=Math.max(15,Math.min(92,Math.round(92-topD*1.8-Math.abs(blended-lin)*0.3)));
   const st=STATS[rank];
-
-  g('rr-score').textContent=blended.toFixed(1)+'M';
-  g('rr-score-range').textContent=st?`(typical ${rank}: ${st.score.min}–${st.score.max}M)`:'';
-  const badge=g('rr-badge');badge.textContent=rank;badge.className=`rr-badge rr-${rank}`;
-  g('rr-conf-bar').style.width=conf+'%';
-  g('rr-conf-txt').textContent=conf+'% confidence';
-  g('rr-nearest').textContent=nearest?`Nearest sample: ${nearest.rank} · ${nearest.migration_score}M`:'';
-
-  // percentile bars
-  const pctWrap=g('pct-bars');
   const isJa=g('tab-ja').classList.contains('active');
-  const labels=isJa?FEAT_LABEL_JA:FEAT_LABEL_EN;
-  pctWrap.innerHTML=`<div style="font-size:11px;color:var(--muted2);font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${isJa?'サンプル内パーセンタイル':'Stat percentile in sample'}</div>`;
-  FEAT.forEach((f,i)=>{
-    const sorted=DATA.map(r=>r[f]).sort((a,b)=>a-b);
-    const pct=Math.round(sorted.filter(x=>x<=v[f]).length/sorted.length*100);
-    const row=document.createElement('div');row.className='pct-row';
-    row.innerHTML=`<div class="pct-name">${labels[i]}</div><div><div class="pct-track"><div class="pct-fill" style="width:0%" data-pct="${pct}"></div></div></div><div class="pct-val">${pct}%</div>`;
-    pctWrap.appendChild(row);
-  });
+  const labels=isJa?LABELS_JA:LABELS_EN;
+
+  // build ML content
+  const mc=g('ml-content');
+  mc.innerHTML=`
+    <div class="ml-score-row">
+      <span class="ml-score-num">${blended.toFixed(1)}</span><span class="ml-score-unit">M</span>
+      ${st?`<span class="ml-score-range">${isJa?'典型':'typical'} ${rank}: ${st.score.min}–${st.score.max}M</span>`:''}
+    </div>
+    <div class="ml-rank-row">
+      <span class="ml-rank-badge badge-${rank}">${rank}</span>
+      <span class="ml-rank-nearest">${nearest?`${isJa?'最近傍':'Nearest sample'}: ${nearest.rank} · ${nearest.migration_score}M`:''}</span>
+    </div>
+    <div class="ml-conf-row">
+      <span class="ml-conf-label">${isJa?'信頼度':'Confidence'}</span>
+      <div class="ml-conf-bg"><div class="ml-conf-fill" style="width:0%" id="cfill"></div></div>
+      <span class="ml-conf-pct">${conf}%</span>
+    </div>
+    <div class="pct-section">
+      <div class="pct-title">${isJa?'サンプル内パーセンタイル':'Stat percentile in sample'}</div>
+      ${FEAT.map((f,i)=>{
+        const sorted=DATA.map(r=>r[f]).sort((a,b)=>a-b);
+        const pct=Math.round(sorted.filter(x=>x<=v[f]).length/sorted.length*100);
+        return `<div class="pct-row"><div class="pct-name">${labels[i]}</div><div class="pct-track"><div class="pct-fill" style="width:0%" data-pct="${pct}"></div></div><div class="pct-val">${pct}%</div></div>`;
+      }).join('')}
+    </div>`;
+
+  // animate bars
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    pctWrap.querySelectorAll('.pct-fill').forEach(el=>el.style.width=el.dataset.pct+'%');
+    const cf=document.getElementById('cfill');
+    if(cf)cf.style.width=conf+'%';
+    mc.querySelectorAll('.pct-fill').forEach(el=>el.style.width=el.dataset.pct+'%');
   }));
+
+  g('ml-placeholder')&&(g('ml-placeholder').style.display='none');
 }
 
-['d12','d13','d14','d15','d16'].forEach(id=>g(id).addEventListener('input',recalc));
+// calculate button
+g('calcBtn').addEventListener('click',runCalc);
+// also live-update community EQs while typing (without ML)
+IDS.forEach(id=>g(id).addEventListener('input',()=>{
+  const build=nv('d12'),science=nv('d13'),hero=nv('d14'),tank=nv('d15');
+  if(build||science||hero||tank){
+    const EQ1=((3*tank)+build+science+hero)/6;
+    const EQ2=((3*tank)+build+science+hero)/4;
+    const EQ3=(build+science+hero+tank)*0.265;
+    g('eq1').textContent=EQ1.toFixed(1)+'M';
+    g('eq2').textContent=EQ2.toFixed(1)+'M';
+    g('eq3').textContent=EQ3.toFixed(1)+'M';
+  }
+  if(calculated)runCalc();
+}));
 
-// ── i18n
+// i18n
 const TIERS={
-  en:[
-    {name:'Elite (1 spot)',     newRange:'>160M',    oldRange:'(>100M)'},
-    {name:'Advanced (5 spots)', newRange:'80M–160M', oldRange:'(40M–100M)'},
-    {name:'Medium (40 spots)',  newRange:'40M–80M',  oldRange:'(20M–40M)'},
-    {name:'Regular (60 spots)', newRange:'0M–40M',   oldRange:'(0M–20M)'},
-  ],
-  ja:[
-    {name:'エリート (1枠)',     newRange:'>160M',    oldRange:'(>100M)'},
-    {name:'アドバンスド (5枠)', newRange:'80M–160M', oldRange:'(40M–100M)'},
-    {name:'ミディアム (40枠)',  newRange:'40M–80M',  oldRange:'(20M–40M)'},
-    {name:'レギュラー (60枠)', newRange:'0M–40M',   oldRange:'(0M–20M)'},
-  ]
+  en:[{name:'Elite (1 spot)',newRange:'>160M',oldRange:'(>100M)'},{name:'Advanced (5 spots)',newRange:'80M–160M',oldRange:'(40M–100M)'},{name:'Medium (40 spots)',newRange:'40M–80M',oldRange:'(20M–40M)'},{name:'Regular (60 spots)',newRange:'0M–40M',oldRange:'(0M–20M)'}],
+  ja:[{name:'エリート (1枠)',newRange:'>160M',oldRange:'(>100M)'},{name:'アドバンスド (5枠)',newRange:'80M–160M',oldRange:'(40M–100M)'},{name:'ミディアム (40枠)',newRange:'40M–80M',oldRange:'(20M–40M)'},{name:'レギュラー (60枠)',newRange:'0M–40M',oldRange:'(0M–20M)'}]
 };
-
 function setLang(lang){
   const ja=lang==='ja';
   g('panel-en').classList.toggle('active',!ja);g('panel-ja').classList.toggle('active',ja);
@@ -336,37 +380,39 @@ function setLang(lang){
   g('inputs-title').textContent=ja?'入力':'Inputs';
   g('inputs-sub').textContent=ja?'各戦力をM（百万）単位で入力。':'Enter your power values in millions (M).';
   g('results-title').textContent=ja?'結果':'Results';
-  g('results-sub').textContent=ja?'入力と同時に更新されます。':'Updates instantly as you type.';
+  g('results-sub').textContent=ja?'Calculateを押すか入力で更新。':'Press Calculate or type to update.';
   g('lbl-d12').textContent=ja?'建物戦力 (M)':'Building Power (M)';
   g('lbl-d13').textContent=ja?'研究戦力 (M)':'Science Power (M)';
   g('lbl-d14').textContent=ja?'Hero戦力 (M)':'Hero Power (M)';
   g('lbl-d15').textContent=ja?'改造車戦力 (M)':'Tank (Mod Vehicle) Power (M)';
   g('lbl-d16').textContent=ja?'キル数 (M)':'Kills (M)';
+  g('hint-d12').textContent=ja?'サンプル範囲: 54–268M':'Sample range: 54–268 M';
+  g('hint-d13').textContent=ja?'サンプル範囲: 16–65M':'Sample range: 16–65 M';
+  g('hint-d14').textContent=ja?'サンプル範囲: 57–183M':'Sample range: 57–183 M';
+  g('hint-d15').textContent=ja?'サンプル範囲: 8–43M · 最重要':'Sample range: 8–43 M · Highest weight';
+  g('hint-d16').textContent=ja?'サンプル範囲: 0.6–31.4M':'Sample range: 0.6–31.4 M';
+  g('calcBtn').textContent=ja?'⚡ スコアを計算':'⚡ Calculate Score';
   g('k-eq1').textContent=ja?'EQ1・計算式1':'EQ1';
   g('k-eq2').textContent=ja?'EQ2・計算式2':'EQ2';
   g('k-eq3').textContent=ja?'EQ3・計算式3':'EQ3';
   g('tip-eq1').setAttribute('data-tip',ja?'計算式1: ((3×改造車) + 建物 + 研究 + Hero) / 6':'EQ1: ((3×Tank) + Build + Science + Hero) / 6');
   g('tip-eq2').setAttribute('data-tip',ja?'計算式2: ((3×改造車) + 建物 + 研究 + Hero) / 4':'EQ2: ((3×Tank) + Build + Science + Hero) / 4');
   g('tip-eq3').setAttribute('data-tip',ja?'計算式3: (建物 + 研究 + Hero + 改造車) × 0.265':'EQ3: (Build + Science + Hero + Tank) × 0.265');
-  g('rr-label').textContent=ja?'MLサンプル推定':'ML Estimate (sample-based)';
+  g('ml-label').textContent=ja?'MLサンプル推定（111サンプルモデル）':'ML Estimate (111-sample model)';
+  const ph=g('ml-placeholder');if(ph)ph.textContent=ja?'入力してCalculateを押してください':'Enter your stats and press Calculate';
   g('tiers-heading').textContent=ja?'移行枠':'Migration Tiers';
   g('tiers-sub').textContent=ja?'スコア範囲の目安。':'Based on your score range.';
-  g('tiers-note').textContent=ja?'⚠️ 数値は調査サンプルより — 移行タイミングやサーバーによって異なる場合があります。':'⚠️ Ranges derived from survey sample — may vary by server and timing.';
+  g('tiers-note').textContent=ja?'⚠️ 数値は調査サンプルより — サーバーやタイミングで変動する場合があります。':'⚠️ Ranges derived from survey sample — may vary by server and timing.';
   g('col-tier-label').textContent=ja?'枠':'Tier';
   g('col-range-label').textContent=ja?'新 ｜ 旧':'New | Old';
   g('ref-title').textContent=ja?'サンプル参考値（中央値）':'Sample Reference (Medians)';
   g('ref-sub').textContent=ja?'111人のサーベイより。':'Observed from 111 surveyed players.';
-  g('formula-title').textContent=ja?'MLフォーミュラ（リッジ回帰）':'ML Formula (Ridge Regression)';
+  g('formula-title').textContent=ja?'MLフォーミュラ':'ML Formula (Ridge Regression)';
   g('formula-sub').textContent=ja?'移行スコア調査スプレッドシートで訓練。':'Trained on the migration survey spreadsheet.';
-  g('formula-note').textContent=ja?'タンクと研究が最も重要（特徴量重要度: 57%・28%）。建物とキル数は低い。Regularランクはサンプル数2のため信頼性低。':'Tank and science are strongest predictors (57% and 28% importance). Build and kills have minimal weight. Regular rank only has 2 samples.';
-  TIERS[ja?'ja':'en'].forEach((t,i)=>{
-    g(`tier-name-${i}`).textContent=t.name;
-    g(`tier-new-${i}`).textContent=t.newRange;
-    g(`tier-old-${i}`).textContent=t.oldRange;
-  });
-  recalc();
+  g('formula-note').textContent=ja?'タンクと研究が最も重要（57%・28%）。Regular は2サンプルのみで信頼性低。':'Tank and science are the strongest predictors (57% and 28%). Regular rank only has 2 samples — treat as unreliable.';
+  TIERS[ja?'ja':'en'].forEach((t,i)=>{g(`tier-name-${i}`).textContent=t.name;g(`tier-new-${i}`).textContent=t.newRange;g(`tier-old-${i}`).textContent=t.oldRange;});
+  if(calculated)runCalc();
 }
-
 g('tab-en').addEventListener('click',()=>setLang('en'));
 g('tab-ja').addEventListener('click',()=>setLang('ja'));
 setLang('en');
