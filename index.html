@@ -71,4 +71,515 @@
     }
 
     .panel{display:none;margin:10px 0 16px}
-    .panel.active{dis
+    .panel.active{display:block}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));
+      gap:14px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,0.10),rgba(255,255,255,0.06));
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow2);
+      padding:18px;
+      backdrop-filter:blur(10px);
+      min-width:0;
+    }
+
+    .card h2{margin:0 0 6px;font-size:16px;letter-spacing:.2px}
+    .muted{color:var(--muted);font-size:13px;line-height:1.5}
+    .muted2{color:var(--muted2);font-size:12px;line-height:1.5}
+
+    .field{margin:10px 0}
+    label{display:block;font-weight:800;font-size:13px;letter-spacing:.2px;margin-bottom:5px}
+
+    input[type=number]{
+      width:100%;
+      padding:12px;
+      font-size:16px;
+      color:var(--text);
+      background:rgba(10,14,28,0.55);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:14px;
+      transition:border .15s,box-shadow .15s;
+      outline:none;
+    }
+
+    input[type=number]:hover{border-color:rgba(255,255,255,0.22)}
+    input[type=number]:focus{border-color:rgba(124,58,237,0.55);box-shadow:var(--ring)}
+
+    .hint{font-size:11px;color:var(--muted2);margin-top:3px}
+    .kills-divider{margin:14px 0 8px;border:none;border-top:1px solid rgba(255,255,255,0.10)}
+
+    .kills-badge{
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:rgba(34,197,94,0.15);
+      color:#86efac;
+      border:1px solid rgba(34,197,94,0.25);
+    }
+
+    .calc-btn{
+      width:100%;
+      margin-top:14px;
+      padding:15px;
+      background:linear-gradient(135deg,rgba(124,58,237,0.9),rgba(34,197,94,0.75));
+      color:#fff;
+      border:none;
+      border-radius:16px;
+      cursor:pointer;
+      font-size:16px;
+      font-weight:800;
+      letter-spacing:.3px;
+      box-shadow:0 8px 24px rgba(124,58,237,0.3);
+      transition:opacity .15s,transform .12s;
+    }
+
+    .calc-btn:hover{opacity:.88;transform:translateY(-1px)}
+    .calc-btn:active{transform:translateY(0)}
+
+    .results-placeholder{
+      text-align:center;
+      padding:32px 0;
+      color:var(--muted2);
+      font-size:14px;
+    }
+
+    .est-stack{display:grid;gap:12px;margin-top:8px}
+
+    .est-card{
+      border-radius:18px;
+      padding:16px 18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05);
+    }
+
+    .est-tag{
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      color:var(--muted2);
+      margin-bottom:6px;
+    }
+
+    .est-name{
+      font-size:13px;
+      font-weight:700;
+      color:var(--muted);
+      margin-bottom:8px;
+      line-height:1.3;
+    }
+
+    .est-score-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+    .est-num{font-size:38px;font-weight:900;line-height:1;color:#fff}
+    .est-unit{font-size:17px;font-weight:700;color:var(--muted)}
+
+    .est-badge{
+      display:inline-block;
+      padding:4px 14px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:13px;
+      align-self:flex-end;
+      margin-bottom:3px;
+    }
+
+    .badge-Elite{background:rgba(167,139,250,0.2);color:#c4b5fd;border:1px solid rgba(167,139,250,0.35)}
+    .badge-Advanced{background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3)}
+    .badge-Medium{background:rgba(251,191,36,0.12);color:#fcd34d;border:1px solid rgba(251,191,36,0.25)}
+    .badge-Regular{background:rgba(255,255,255,0.07);color:var(--muted);border:1px solid rgba(255,255,255,0.12)}
+
+    .est-card1 .est-num{color:#a78bfa}
+    .est-card2 .est-num{color:#86efac}
+    .est-card3 .est-num{color:#93c5fd}
+    .est-card1{border-color:rgba(167,139,250,0.28)}
+    .est-card2{border-color:rgba(34,197,94,0.25)}
+    .est-card3{
+      border-color:rgba(147,197,253,0.45);
+      background:linear-gradient(135deg,rgba(147,197,253,0.08),rgba(34,197,94,0.05));
+    }
+
+    @media(max-width:520px){
+      .tabs{width:100%;justify-content:center}
+      .tabbtn{flex:1 1 0;text-align:center}
+    }
+
+    .tier-section{margin-top:20px}
+    .tier-section-head{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;flex-wrap:wrap}
+    .tier-section-head h2{margin:0}
+    .tier-note{font-size:11px;color:rgba(255,200,80,0.85);font-style:italic;line-height:1.35}
+
+    .tier-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));
+      gap:10px;
+    }
+
+    .tier-item{
+      border-radius:16px;
+      padding:14px 16px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.05);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .tier-item.tier-elite{border-color:rgba(167,139,250,0.30);background:rgba(167,139,250,0.07)}
+    .tier-item.tier-advanced{border-color:rgba(34,197,94,0.25);background:rgba(34,197,94,0.05)}
+    .tier-item.tier-medium{border-color:rgba(251,191,36,0.20);background:rgba(251,191,36,0.04)}
+    .tier-item.tier-regular{border-color:rgba(255,255,255,0.10);background:rgba(255,255,255,0.04)}
+    .tier-item.active-tier{box-shadow:0 0 0 2px rgba(255,255,255,0.4)}
+
+    .tier-rank{font-size:16px;font-weight:900}
+    .tier-elite .tier-rank{color:#c4b5fd}
+    .tier-advanced .tier-rank{color:#86efac}
+    .tier-medium .tier-rank{color:#fcd34d}
+    .tier-regular .tier-rank{color:var(--muted)}
+
+    .tier-score-range{font-size:13px;font-weight:800;color:var(--text)}
+    .tier-spots{font-size:11px;color:var(--muted2)}
+
+    .tier-you{
+      font-size:11px;
+      font-weight:800;
+      color:#fcd34d;
+      margin-top:2px;
+      display:none;
+    }
+
+    .tier-item.active-tier .tier-you{display:block}
+
+    .mae-note{
+      display:inline-block;
+      margin-top:10px;
+      font-size:11px;
+      color:rgba(251,191,36,0.8);
+      background:rgba(251,191,36,0.08);
+      border:1px solid rgba(251,191,36,0.18);
+      border-radius:8px;
+      padding:4px 9px;
+    }
+
+    .method-card{margin-top:14px}
+    .method-text{font-size:13px;color:var(--muted);line-height:1.85;margin-top:8px}
+    .method-text strong{color:var(--text)}
+
+    .disclaimer-box{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      background:rgba(251,191,36,0.06);
+      border:1px solid rgba(251,191,36,0.18);
+      font-size:12px;
+      color:rgba(255,200,80,0.9);
+      line-height:1.75;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <h1 id="title-top">Migration Score Calculator</h1>
+      <p id="subtitle-top">Community-built estimation tool. Not an official formula.</p>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tabbtn active" id="tab-en" type="button">English</button>
+      <button class="tabbtn" id="tab-ja" type="button">Japanese</button>
+    </div>
+  </div>
+
+  <section class="panel active" id="panel-en">
+    <div class="muted">Reference tool only. Average model error +/-9.4M. Not affiliated with the game developers.</div>
+  </section>
+
+  <section class="panel" id="panel-ja">
+    <div class="muted">参考ツールのみ。平均モデル誤差 +/-9.4M。ゲーム開発者とは無関係です。</div>
+  </section>
+
+  <div class="grid">
+    <div class="card">
+      <h2 id="inputs-title">Inputs</h2>
+      <div class="muted2" id="inputs-sub">Enter your power values in millions (M).</div>
+
+      <div class="field">
+        <label id="lbl-d13">Science Power (M)</label>
+        <input id="d13" type="number" step="any" placeholder="e.g. 30" inputmode="decimal">
+        <div class="hint" id="hint-d13">Sample range: 16 - 65 M</div>
+      </div>
+
+      <div class="field">
+        <label id="lbl-d14">Hero Power (M)</label>
+        <input id="d14" type="number" step="any" placeholder="e.g. 88" inputmode="decimal">
+        <div class="hint" id="hint-d14">Sample range: 57 - 183 M</div>
+      </div>
+
+      <div class="field">
+        <label id="lbl-d15">Tank (Mod Vehicle) Power (M)</label>
+        <input id="d15" type="number" step="any" placeholder="e.g. 15" inputmode="decimal">
+        <div class="hint" id="hint-d15">Sample range: 8 - 43 M (Highest weight)</div>
+      </div>
+
+      <div class="field">
+        <label id="lbl-d12">Building Power (M)</label>
+        <input id="d12" type="number" step="any" placeholder="e.g. 100" inputmode="decimal">
+        <div class="hint" id="hint-d12">Sample range: 54 - 268 M (reference only)</div>
+      </div>
+
+      <hr class="kills-divider">
+
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+        <div class="kills-badge" id="kills-badge">Used in Formula 2 and 3</div>
+      </div>
+
+      <div class="field">
+        <label id="lbl-d16">Kills (M)</label>
+        <input id="d16" type="number" step="any" placeholder="e.g. 6" inputmode="decimal">
+        <div class="hint" id="hint-d16">Sample range: 0.6 - 31.4 M</div>
+      </div>
+
+      <button class="calc-btn" id="calcBtn">Calculate Score</button>
+    </div>
+
+    <div class="card">
+      <h2 id="results-title">Score Estimates</h2>
+      <div class="muted2" id="results-sub">Press Calculate or type to update.</div>
+
+      <div id="results-area">
+        <div class="results-placeholder" id="results-placeholder">Enter your stats and press Calculate</div>
+
+        <div class="est-stack" id="est-stack" style="display:none">
+          <div class="est-card est-card1">
+            <div class="est-tag" id="ec1-tag">Formula 1 - No Kills</div>
+            <div class="est-name" id="ec1-name">Science + Hero + Tank (excl. Kills and Building)</div>
+            <div class="est-score-row">
+              <span class="est-num" id="f1-num">-</span>
+              <span class="est-unit">M</span>
+              <span class="est-badge" id="f1-badge"></span>
+            </div>
+          </div>
+
+          <div class="est-card est-card2">
+            <div class="est-tag" id="ec2-tag">Formula 2 - With Kills</div>
+            <div class="est-name" id="ec2-name">Science + Hero + Tank + Kills (excl. Building)</div>
+            <div class="est-score-row">
+              <span class="est-num" id="f2-num">-</span>
+              <span class="est-unit">M</span>
+              <span class="est-badge" id="f2-badge"></span>
+            </div>
+          </div>
+
+          <div class="est-card est-card3">
+            <div class="est-tag" id="ec3-tag">Average Estimate (Recommended)</div>
+            <div class="est-name" id="ec3-name">Average of Formula 1 and 2 - best single estimate</div>
+            <div class="est-score-row">
+              <span class="est-num" id="f3-num">-</span>
+              <span class="est-unit">M</span>
+              <span class="est-badge" id="f3-badge"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tier-section">
+    <div class="tier-section-head">
+      <h2 id="tiers-heading">Migration Tiers</h2>
+      <span class="tier-note" id="tiers-note">Ranges from survey data - may vary by server and timing.</span>
+    </div>
+
+    <div class="muted2" id="tiers-sub" style="margin-bottom:12px">
+      Your estimated tier (based on the Average Estimate) will be highlighted below.
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier-item tier-elite" id="tier-Elite">
+        <div class="tier-rank" id="tier-rank-Elite">Elite</div>
+        <div class="tier-score-range">&gt;160M</div>
+        <div class="tier-spots" id="tier-spots-Elite">1 spot</div>
+        <div class="tier-you" id="tier-you-Elite">Your estimate</div>
+      </div>
+
+      <div class="tier-item tier-advanced" id="tier-Advanced">
+        <div class="tier-rank" id="tier-rank-Advanced">Advanced</div>
+        <div class="tier-score-range">80M - 160M</div>
+        <div class="tier-spots" id="tier-spots-Advanced">5 spots</div>
+        <div class="tier-you" id="tier-you-Advanced">Your estimate</div>
+      </div>
+
+      <div class="tier-item tier-medium" id="tier-Medium">
+        <div class="tier-rank" id="tier-rank-Medium">Medium</div>
+        <div class="tier-score-range">40M - 80M</div>
+        <div class="tier-spots" id="tier-spots-Medium">40 spots</div>
+        <div class="tier-you" id="tier-you-Medium">Your estimate</div>
+      </div>
+
+      <div class="tier-item tier-regular" id="tier-Regular">
+        <div class="tier-rank" id="tier-rank-Regular">Regular</div>
+        <div class="tier-score-range">0M - 40M</div>
+        <div class="tier-spots" id="tier-spots-Regular">60 spots</div>
+        <div class="tier-you" id="tier-you-Regular">Your estimate</div>
+      </div>
+    </div>
+
+    <div class="mae-note" id="mae-note">Model trained on 111 players - R2= 0.980 - Average error +/-9.4M</div>
+  </div>
+
+  <div class="method-card">
+    <div class="card" style="margin-top:14px">
+      <h2 id="method-title">Methodology and Disclaimer</h2>
+
+      <div class="method-text" id="method-text">
+        This calculator was developed through a structured community survey of <strong>111 active players</strong> across 29 servers during a live migration event window (June 12-19). The collected dataset - comprising individual in-game power statistics alongside their corresponding migration scores - was analyzed using <strong>linear regression</strong>, with the assistance of Claude AI, to produce a predictive formula capable of estimating migration scores for future players.
+        <br><br>
+        Two formula variants are provided: one that excludes kill count (for accessibility when that data is not readily available), and one that incorporates it for a marginally more refined estimate. The average of the two is presented as the recommended reference score.
+      </div>
+
+      <div class="disclaimer-box" id="disclaimer-text">
+        <strong>Important notice:</strong> The dataset used to build this model is limited in size. As a result, estimates may not fully capture every server's competitive environment, shifts in game meta, or atypical player profiles. This tool is intended strictly as an <strong>informational reference</strong> - it is not a definitive migration score predictor, and it is not affiliated with or endorsed by the game developers. We strongly recommend cross-referencing your result against your own server's active migration standings before making any decisions.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const g = id => document.getElementById(id);
+  const nv = id => parseFloat(g(id).value) || 0;
+  const rankOf = sc => sc >= 160 ? "Elite" : sc >= 80 ? "Advanced" : sc >= 40 ? "Medium" : "Regular";
+  let calculated = false;
+
+  function runCalc(){
+    calculated = true;
+
+    const science = nv("d13");
+    const hero = nv("d14");
+    const tank = nv("d15");
+    const kills = nv("d16");
+
+    const f1 = 2.753 * science + 1.178 * hero + 3.900 * tank - 125.735;
+    const f2 = 2.664 * science + 1.159 * hero + 3.913 * tank + 0.285 * kills - 123.626;
+    const f3 = (f1 + f2) / 2;
+
+    const r1 = rankOf(f1);
+    const r2 = rankOf(f2);
+    const r3 = rankOf(f3);
+
+    g("f1-num").textContent = f1.toFixed(1);
+    g("f2-num").textContent = f2.toFixed(1);
+    g("f3-num").textContent = f3.toFixed(1);
+
+    g("f1-badge").textContent = r1;
+    g("f1-badge").className = "est-badge badge-" + r1;
+
+    g("f2-badge").textContent = r2;
+    g("f2-badge").className = "est-badge badge-" + r2;
+
+    g("f3-badge").textContent = r3;
+    g("f3-badge").className = "est-badge badge-" + r3;
+
+    g("results-placeholder").style.display = "none";
+    g("est-stack").style.display = "grid";
+
+    ["Elite","Advanced","Medium","Regular"].forEach(t => {
+      g("tier-" + t).classList.toggle("active-tier", t === r3);
+    });
+  }
+
+  g("calcBtn").addEventListener("click", runCalc);
+
+  ["d13","d14","d15","d12","d16"].forEach(id => {
+    g(id).addEventListener("input", () => {
+      if (nv("d13") || nv("d14") || nv("d15")) runCalc();
+    });
+  });
+
+  const setLang = lang => {
+    const ja = lang === "ja";
+
+    g("panel-en").classList.toggle("active", !ja);
+    g("panel-ja").classList.toggle("active", ja);
+    g("tab-en").classList.toggle("active", !ja);
+    g("tab-ja").classList.toggle("active", ja);
+
+    g("title-top").textContent = ja ? "移行スコア計算機" : "Migration Score Calculator";
+    g("subtitle-top").textContent = ja ? "コミュニティ製推定ツール。公式計算式ではありません。" : "Community-built estimation tool. Not an official formula.";
+
+    g("inputs-title").textContent = ja ? "入力" : "Inputs";
+    g("inputs-sub").textContent = ja ? "各戦力をM（百万）単位で入力。" : "Enter your power values in millions (M).";
+
+    g("lbl-d13").textContent = ja ? "研究戦力 (M)" : "Science Power (M)";
+    g("lbl-d14").textContent = ja ? "Hero戦力 (M)" : "Hero Power (M)";
+    g("lbl-d15").textContent = ja ? "改造車戦力 (M)" : "Tank (Mod Vehicle) Power (M)";
+    g("lbl-d12").textContent = ja ? "建設戦力 (M)" : "Building Power (M)";
+    g("lbl-d16").textContent = ja ? "キル数 (M)" : "Kills (M)";
+
+    g("hint-d13").textContent = ja ? "サンプル範囲: 16-65M" : "Sample range: 16 - 65 M";
+    g("hint-d14").textContent = ja ? "サンプル範囲: 57-183M" : "Sample range: 57 - 183 M";
+    g("hint-d15").textContent = ja ? "サンプル範囲: 8-43M（最重要）" : "Sample range: 8 - 43 M (Highest weight)";
+    g("hint-d12").textContent = ja ? "サンプル範囲: 54-268M（参考のみ）" : "Sample range: 54 - 268 M (reference only)";
+    g("hint-d16").textContent = ja ? "サンプル範囲: 0.6-31.4M" : "Sample range: 0.6 - 31.4 M";
+
+    g("kills-badge").textContent = ja ? "式2・3で使用" : "Used in Formula 2 and 3";
+    g("calcBtn").textContent = ja ? "スコアを計算" : "Calculate Score";
+
+    g("results-title").textContent = ja ? "スコア推定" : "Score Estimates";
+    g("results-sub").textContent = ja ? "Calculateを押すか入力で更新。" : "Press Calculate or type to update.";
+
+    g("ec1-tag").textContent = ja ? "式1 - キルなし" : "Formula 1 - No Kills";
+    g("ec1-name").textContent = ja ? "研究 + Hero + 改造車（キル・建設除く）" : "Science + Hero + Tank (excl. Kills and Building)";
+    g("ec2-tag").textContent = ja ? "式2 - キルあり" : "Formula 2 - With Kills";
+    g("ec2-name").textContent = ja ? "研究 + Hero + 改造車 + キル（建設除く）" : "Science + Hero + Tank + Kills (excl. Building)";
+    g("ec3-tag").textContent = ja ? "平均推定（推奨）" : "Average Estimate (Recommended)";
+    g("ec3-name").textContent = ja ? "式1・2の平均 - 推奨単一推定値" : "Average of Formula 1 and 2 - best single estimate";
+
+    g("tiers-heading").textContent = ja ? "移行ティア" : "Migration Tiers";
+    g("tiers-note").textContent = ja ? "サーベイデータ由来 - サーバー・タイミングで変動あり。" : "Ranges from survey data - may vary by server and timing.";
+    g("tiers-sub").textContent = ja ? "平均推定値に基づく推定ティアが以下で強調表示されます。" : "Your estimated tier (based on the Average Estimate) will be highlighted below.";
+
+    g("tier-rank-Elite").textContent = ja ? "エリート" : "Elite";
+    g("tier-rank-Advanced").textContent = ja ? "アドバンスド" : "Advanced";
+    g("tier-rank-Medium").textContent = ja ? "ミディアム" : "Medium";
+    g("tier-rank-Regular").textContent = ja ? "レギュラー" : "Regular";
+
+    g("tier-spots-Elite").textContent = ja ? "1枠" : "1 spot";
+    g("tier-spots-Advanced").textContent = ja ? "5枠" : "5 spots";
+    g("tier-spots-Medium").textContent = ja ? "40枠" : "40 spots";
+    g("tier-spots-Regular").textContent = ja ? "60枠" : "60 spots";
+
+    ["Elite","Advanced","Medium","Regular"].forEach(t => {
+      g("tier-you-" + t).textContent = ja ? "あなたの推定" : "Your estimate";
+    });
+
+    g("mae-note").textContent = ja ? "111人データで学習 - R2=0.980 - 平均誤差 +/-9.4M" : "Model trained on 111 players - R2= 0.980 - Average error +/-9.4M";
+
+    g("method-title").textContent = ja ? "算出方法・免責事項" : "Methodology and Disclaimer";
+
+    g("method-text").innerHTML = ja
+      ? "この計算機は、移行イベント期間中（6月12日〜19日）の29サーバーにわたる<strong>111人のアクティブプレイヤー</strong>を対象とした体系的なコミュニティサーベイをもとに開発されました。収集したデータセット（各種戦力値と実際の移行スコア）を、Claude AIの支援のもと<strong>線形回帰分析</strong>で解析し、プレイヤーのゲーム内統計から移行スコアを推定する計算式を導出しました。<br><br>2種類の計算式を提供しています：キル数を除外したもの（データ未入力時でも利用可能）と、キル数を含むわずかに精度の高いものです。この2つの平均が推奨参考スコアとして表示されます。"
+      : "This calculator was developed through a structured community survey of <strong>111 active players</strong> across 29 servers during a live migration event window (June 12-19). The collected dataset - comprising individual in-game power statistics alongside their corresponding migration scores - was analyzed using <strong>linear regression</strong>, with the assistance of Claude AI, to produce a predictive formula capable of estimating migration scores for future players.<br><br>Two formula variants are provided: one that excludes kill count (for accessibility when that data is not readily available), and one that incorporates it for a marginally more refined estimate. The average of the two is presented as the recommended reference score.";
+
+    g("disclaimer-text").innerHTML = ja
+      ? "<strong>重要：</strong>このモデルの基礎となるデータセットは規模が限られています。そのため、推定値はすべてのサーバーの競争環境、ゲームメタの変化、または特異なプレイヤービルドを正確に反映しない場合があります。このツールはあくまで<strong>参考情報</strong>として提供されており、確定的な移行スコア予測ツールではなく、ゲーム開発者とは無関係です。ご自身のサーバーのリアルタイムな移行スタンディングと必ず照合してください。"
+      : "<strong>Important notice:</strong> The dataset used to build this model is limited in size. As a result, estimates may not fully capture every server's competitive environment, shifts in game meta, or atypical player profiles. This tool is intended strictly as an <strong>informational reference</strong> - it is not a definitive migration score predictor, and it is not affiliated with or endorsed by the game developers. We strongly recommend cross-referencing your result against your own server's active migration standings before making any decisions.";
+
+    if (calculated) runCalc();
+  };
+
+  g("tab-en").addEventListener("click", () => setLang("en"));
+  g("tab-ja").addEventListener("click", () => setLang("ja"));
+  setLang("en");
+})();
+</script>
+</body>
+</html>
