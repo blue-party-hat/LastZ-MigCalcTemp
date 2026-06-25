@@ -312,6 +312,12 @@
       <div class="muted2" id="inputs-sub">Enter your power values in millions (M).</div>
 
       <div class="field">
+        <label id="lbl-d12">Building Power (M)</label>
+        <input id="d12" type="number" step="any" placeholder="e.g. 100" inputmode="decimal">
+        <div class="hint" id="hint-d12">Sample range: 54 - 268 M (reference only)</div>
+      </div>
+
+      <div class="field">
         <label id="lbl-d13">Science Power (M)</label>
         <input id="d13" type="number" step="any" placeholder="e.g. 30" inputmode="decimal">
         <div class="hint" id="hint-d13">Sample range: 16 - 65 M</div>
@@ -327,12 +333,6 @@
         <label id="lbl-d15">Tank (Mod Vehicle) Power (M)</label>
         <input id="d15" type="number" step="any" placeholder="e.g. 15" inputmode="decimal">
         <div class="hint" id="hint-d15">Sample range: 8 - 43 M (Highest weight)</div>
-      </div>
-
-      <div class="field">
-        <label id="lbl-d12">Building Power (M)</label>
-        <input id="d12" type="number" step="any" placeholder="e.g. 100" inputmode="decimal">
-        <div class="hint" id="hint-d12">Sample range: 54 - 268 M (reference only)</div>
       </div>
 
       <hr class="kills-divider">
@@ -498,9 +498,9 @@
 
   g("calcBtn").addEventListener("click", runCalc);
 
-  ["d13","d14","d15","d12","d16"].forEach(id => {
+  ["d12","d13","d14","d15","d16"].forEach(id => {
     g(id).addEventListener("input", () => {
-      if (nv("d13") || nv("d14") || nv("d15")) runCalc();
+      if (nv("d12") || nv("d13") || nv("d14") || nv("d15") || nv("d16")) runCalc();
     });
   });
 
@@ -518,16 +518,16 @@
     g("inputs-title").textContent = ja ? "入力" : "Inputs";
     g("inputs-sub").textContent = ja ? "各戦力をM（百万）単位で入力。" : "Enter your power values in millions (M).";
 
+    g("lbl-d12").textContent = ja ? "建設戦力 (M)" : "Building Power (M)";
     g("lbl-d13").textContent = ja ? "研究戦力 (M)" : "Science Power (M)";
     g("lbl-d14").textContent = ja ? "Hero戦力 (M)" : "Hero Power (M)";
     g("lbl-d15").textContent = ja ? "改造車戦力 (M)" : "Tank (Mod Vehicle) Power (M)";
-    g("lbl-d12").textContent = ja ? "建設戦力 (M)" : "Building Power (M)";
     g("lbl-d16").textContent = ja ? "キル数 (M)" : "Kills (M)";
 
+    g("hint-d12").textContent = ja ? "サンプル範囲: 54-268M（参考のみ）" : "Sample range: 54 - 268 M (reference only)";
     g("hint-d13").textContent = ja ? "サンプル範囲: 16-65M" : "Sample range: 16 - 65 M";
     g("hint-d14").textContent = ja ? "サンプル範囲: 57-183M" : "Sample range: 57 - 183 M";
     g("hint-d15").textContent = ja ? "サンプル範囲: 8-43M（最重要）" : "Sample range: 8 - 43 M (Highest weight)";
-    g("hint-d12").textContent = ja ? "サンプル範囲: 54-268M（参考のみ）" : "Sample range: 54 - 268 M (reference only)";
     g("hint-d16").textContent = ja ? "サンプル範囲: 0.6-31.4M" : "Sample range: 0.6 - 31.4 M";
 
     g("kills-badge").textContent = ja ? "式2・3で使用" : "Used in Formula 2 and 3";
